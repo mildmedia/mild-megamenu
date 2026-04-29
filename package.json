@@ -1,9 +1,9 @@
 {
-	"name": "vd-megamenu",
-	"version": "1.0.0",
+	"name": "mild-megamenu",
+	"version": "1.1.1",
 	"private": true,
 	"description": "WordPress Mega Menu Block",
-	"author": "John Doe",
+	"author": "Mild ",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
 		"WordPress",

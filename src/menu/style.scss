@@ -1,4 +1,4 @@
-.gw-mm {
+.megamenu {
     position: relative;
 
     &__content {
@@ -51,30 +51,30 @@
 
     &.justify-items {
         &-left {
-            .gw-mm__content {
+            .megamenu__content {
                 justify-content: flex-start;
             }
         }
 
         &-center {
-            .gw-mm__content {
+            .megamenu__content {
                 justify-content: center;
             }
         }
 
         &-right {
-            .gw-mm__content {
+            .megamenu__content {
                 justify-content: flex-end;
             }
         }
     }
 
     &:not(.is-mobile) {
-        .gw-mm-item {
+        .megamenu-item {
 
             &:focus-within,
             &:hover {
-                .gw-mm-item__dropdown-wrapper {
+                .megamenu-item__dropdown-wrapper {
                     height: auto;
                     overflow: visible;
                 }
@@ -83,7 +83,7 @@
     }
 
     &.is-mobile {
-        .gw-mm__content-wrapper {
+        .megamenu__content-wrapper {
             visibility: hidden;
             height: 0;
             position: absolute;
@@ -98,14 +98,14 @@
             overflow: hidden;
         }
 
-        .gw-mm__content {
+        .megamenu__content {
             width: 100%;
             max-width: 600px;
             margin-right: auto;
             margin-left: auto;
         }
 
-        .gw-mm-item {
+        .megamenu-item {
             width: 100%;
 
             &__link {
@@ -117,7 +117,7 @@
         }
 
         &.is-opened {
-            .gw-mm__content-wrapper {
+            .megamenu__content-wrapper {
                 visibility: visible;
                 z-index: 100;
                 overflow: visible;
@@ -125,12 +125,12 @@
                 height: auto;
             }
 
-            .gw-mm__toggle-wrapper.is-close {
+            .megamenu__toggle-wrapper.is-close {
                 display: block;
             }
         }
 
-        .gw-mm-item__dropdown-wrapper {
+        .megamenu-item__dropdown-wrapper {
             position: static;
 
             &.is-opened {
@@ -139,7 +139,7 @@
             }
         }
 
-        .gw-mm-item__dropdown {
+        .megamenu-item__dropdown {
             box-shadow: none;
         }
     }

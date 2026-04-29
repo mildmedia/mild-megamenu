@@ -1,7 +1,7 @@
 <?php
 
 
-namespace VdMegaMenu;
+namespace Mild\Plugins\MegaMenu;
 
 
 class PlainMenuItem extends AbstractBlock {
@@ -43,20 +43,20 @@ class PlainMenuItem extends AbstractBlock {
 		}
 
 		$item_classes = array_merge(
-			[ 'wp-block-vd-plain-menu-item' ],
-			[ 'gw-pm-item' ],
+			[ 'wp-block-mild-plain-menu-item' ],
+			[ 'plainmenu-item' ],
 			trim( $content ) ? [ 'has-children' ] : [],
 			$is_active ? [ 'is-current' ] : [],
 			isset( $attributes['className'] ) ? [ $attributes['className'] ] : []
 		);
 
-		$item_classes = apply_filters( 'vd-megamenu/blocks/plain-menu-item/item-classes', $item_classes, $attributes );
+		$item_classes = apply_filters( 'mild-megamenu/blocks/plain-menu-item/item-classes', $item_classes, $attributes );
 
 		$font_size = $this->generateFontSizeStyles( $attributes );
 		$colors    = $this->generateTextStyles( $attributes );
 
 		$item_link_classes = array_merge(
-			[ 'gw-pm-item__link' ],
+			[ 'plainmenu-item__link' ],
 			[ $font_size['css_classes'] ],
 			[ $colors['css_classes'] ]
 		);
@@ -84,14 +84,14 @@ class PlainMenuItem extends AbstractBlock {
 		$html .= '>' . $attributes['text'] . '</a>';
 
 		if ( trim( $content ) ) {
-			$html .= '<button class="gw-pm-item__toggle"><span class="dashicons dashicons-arrow-down"></span></button>';
+			$html .= '<button class="plainmenu-item__toggle"><span class="dashicons dashicons-arrow-down"></span></button>';
 		}
 
 		$html .= '</div>';
 
 		if ( trim( $content ) ) {
-			$html .= '<div class="gw-pm-item__dropdown">';
-			$html .= '<ul class="gw-pm-item__dropdown-content">';
+			$html .= '<div class="plainmenu-item__dropdown">';
+			$html .= '<ul class="plainmenu-item__dropdown-content">';
 			$html .= $content;
 			$html .= '</ul></div>';
 		}
@@ -150,18 +150,18 @@ class PlainMenuItem extends AbstractBlock {
 	}
 
 	protected function setName() {
-		$this->name = 'vd-megamenu/plain-menu-item';
+		$this->name = 'mild-megamenu/plain-menu-item';
 	}
 
 	protected function setStyle() {
-		$this->style = 'vd-megamenu-block-style';
+		$this->style = 'mild-megamenu-block-style';
 	}
 
 	protected function setEditorStyle() {
-		$this->editor_style = 'vd-megamenu-block-editor';
+		$this->editor_style = 'mild-megamenu-block-editor';
 	}
 
 	protected function setEditorScript() {
-		$this->editor_script = 'vd-megamenu-block';
+		$this->editor_script = 'mild-megamenu-block';
 	}
 }

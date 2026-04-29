@@ -1,7 +1,7 @@
 <?php
 
 
-namespace VdMegaMenu;
+namespace Mild\Plugins\MegaMenu;
 
 
 class MegaMenuItem extends AbstractBlock {
@@ -42,7 +42,7 @@ class MegaMenuItem extends AbstractBlock {
 		$text_style = $this->generateTextStyles( $attributes );
 
 		$item_link_classes = array_merge(
-			[ 'gw-mm-item__link' ],
+			[ 'megamenu-item__link' ],
 			[ $font_style['css_classes'] ],
 			[ $text_style['css_classes'] ]
 		);
@@ -54,14 +54,14 @@ class MegaMenuItem extends AbstractBlock {
 		}
 
 		$item_classes = array_merge(
-			[ 'wp-block-vd-megamenu-item' ],
-			[ 'gw-mm-item' ],
+			[ 'wp-block-mild-megamenu-item' ],
+			[ 'megamenu-item' ],
 			$content ? [ 'has-children' ] : [],
 			$is_active ? [ 'is-current' ] : [],
 			isset( $attributes['className'] ) ? [ $attributes['className'] ] : []
 		);
 
-		$item_classes = apply_filters( 'vd-megamenu/blocks/megamenu-item/item-classes', $item_classes, $attributes );
+		$item_classes = apply_filters( 'mild-megamenu/blocks/megamenu-item/item-classes', $item_classes, $attributes );
 
 		$html .= '<li class="' . esc_attr( implode( ' ', $item_classes ) ) . '">';
 		$html .= '<div class="' . esc_attr( implode( ' ', $item_link_classes ) ) . '" style="' . esc_attr( $item_link_style ) . '">';
@@ -84,15 +84,15 @@ class MegaMenuItem extends AbstractBlock {
 		$html .= '>' . $attributes['text'] . '</a>';
 
 		if ( trim( $content ) ) {
-			$html .= '<button class="gw-mm-item__toggle"><span class="dashicons dashicons-arrow-down"></span></button>';
+			$html .= '<button class="megamenu-item__toggle"><span class="dashicons dashicons-arrow-down"></span></button>';
 		}
 
 		$html .= '</div>';
 
 		if ( trim( $content ) ) {
-			$html .= '<div class="gw-mm-item__dropdown-wrapper">';
-			$html .= '<div class="gw-mm-item__dropdown">';
-			$html .= '<div class="gw-mm-item__dropdown-content">';
+			$html .= '<div class="megamenu-item__dropdown-wrapper">';
+			$html .= '<div class="megamenu-item__dropdown">';
+			$html .= '<div class="megamenu-item__dropdown-content">';
 			$html .= $content;
 			$html .= '</div></div></div>';
 		}
@@ -151,18 +151,18 @@ class MegaMenuItem extends AbstractBlock {
 	}
 
 	protected function setName() {
-		$this->name = 'vd-megamenu/menu-item';
+		$this->name = 'mild-megamenu/menu-item';
 	}
 
 	protected function setStyle() {
-		$this->style = 'vd-megamenu-block-style';
+		$this->style = 'mild-megamenu-block-style';
 	}
 
 	protected function setEditorStyle() {
-		$this->editor_style = 'vd-megamenu-block-editor';
+		$this->editor_style = 'mild-megamenu-block-editor';
 	}
 
 	protected function setEditorScript() {
-		$this->editor_script = 'vd-megamenu-block';
+		$this->editor_script = 'mild-megamenu-block';
 	}
 }

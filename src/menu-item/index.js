@@ -6,7 +6,7 @@ import save from './save';
 import edit from './edit';
 
 registerBlockType(metadata.name, {
-	title: __('Menu Item', 'vd-megamenu'),
+	title: __('Menu Item', 'mild-megamenu'),
 	icon: 'admin-links',
 	category: metadata.category,
 	parent: metadata.parent,

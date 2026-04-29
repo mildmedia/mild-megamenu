@@ -1,4 +1,3 @@
-import MPMegaMenuColorPalette from '../custom-controls/color-palette';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 import {
@@ -46,13 +45,6 @@ function Controls(args) {
 		})
 	}, [menuItemFontSize.size]);
 
-
-	useEffect(() => {
-		updateChildBlocksAttributes({
-			textColor: menuItemColor.slug,
-			customTextColor: menuItemColor.slug ? undefined : menuItemColor.color,
-		})
-	}, [menuItemColor.color]);
 
 	const setMenuItemFontSize = (value) => {
 		const fontSizeSlug = getFontSizeObjectByValue(fontSizes, value).slug;
@@ -112,13 +104,6 @@ function Controls(args) {
 						value={menuItemFontSize.size}
 						onChange={setMenuItemFontSize}
 					/>
-					<MPMegaMenuColorPalette
-						label={__('Color')}
-						disableCustomColors={false}
-						color={menuItemColor.color}
-						onChange={setMenuItemColor}
-						clearable={true}
-					/>
 				</PanelBody>
 			</InspectorControls>
 		</>
@@ -126,9 +111,6 @@ function Controls(args) {
 }
 
 export default compose([
-	withColors({
-		menuItemColor: 'color',
-	}),
 	withFontSizes('menuItemFontSize'),
 	withSelect((select, ownProps) => {
 		const settings = select('core/block-editor').getSettings();

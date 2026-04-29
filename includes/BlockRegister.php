@@ -1,7 +1,7 @@
 <?php
 
 
-namespace VdMegaMenu;
+namespace Mild\Plugins\MegaMenu;
 
 
 class BlockRegister {
@@ -14,8 +14,8 @@ class BlockRegister {
 
 	private function register_blocks_assets() {
 		wp_register_script(
-			'vd-megamenu-block',
-			plugins_url( 'build/index.js', VD_MEGAMENU_FILE ),
+			'mild-megamenu-block',
+			plugins_url( 'build/index.js', MILD_MEGAMENU_FILE ),
 			[
 				'wp-i18n',
 				'wp-editor',
@@ -24,31 +24,31 @@ class BlockRegister {
 				'wp-components',
 				'wp-polyfill'
 			],
-			VD_MEGAMENU_VERSION,
+			MILD_MEGAMENU_VERSION,
 			true
 		);
 
 		wp_register_style(
-			'vd-megamenu-block-editor',
-			plugins_url( 'build/index.css', VD_MEGAMENU_FILE ),
+			'mild-megamenu-block-editor',
+			plugins_url( 'build/index.css', MILD_MEGAMENU_FILE ),
 			[],
-			VD_MEGAMENU_VERSION
+			MILD_MEGAMENU_VERSION
 		);
 
 		wp_register_style(
-			'vd-megamenu-block-style',
-			plugins_url( 'build/style-index.css', VD_MEGAMENU_FILE ),
+			'mild-megamenu-block-style',
+			plugins_url( 'build/style-index.css', MILD_MEGAMENU_FILE ),
 			['dashicons'],
-			VD_MEGAMENU_VERSION
+			MILD_MEGAMENU_VERSION
 		);
 	}
 
 	private function load_blocks() {
-		include_once( plugin_dir_path( VD_MEGAMENU_FILE ) . 'includes/blocks/AbstractBlock.php' );
-		include_once( plugin_dir_path( VD_MEGAMENU_FILE ) . 'includes/blocks/MegaMenu.php' );
-		include_once( plugin_dir_path( VD_MEGAMENU_FILE ) . 'includes/blocks/MegaMenuItem.php' );
-		include_once( plugin_dir_path( VD_MEGAMENU_FILE ) . 'includes/blocks/PlainMenu.php' );
-		include_once( plugin_dir_path( VD_MEGAMENU_FILE ) . 'includes/blocks/PlainMenuItem.php' );
+		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/AbstractBlock.php' );
+		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/MegaMenu.php' );
+		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/MegaMenuItem.php' );
+		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/PlainMenu.php' );
+		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/PlainMenuItem.php' );
 	}
 
 	public function register_blocks() {
@@ -61,6 +61,6 @@ class BlockRegister {
 	}
 
 	public function enqueue_frontend_assets() {
-		wp_enqueue_script( 'vd-megamenu-block-frontend', plugins_url( 'build/frontend.js', VD_MEGAMENU_FILE ), [ 'jquery' ], VD_MEGAMENU_VERSION, true );
+		wp_enqueue_script( 'mild-megamenu-block-frontend', plugins_url( 'build/frontend.js', MILD_MEGAMENU_FILE ), [ 'jquery' ], MILD_MEGAMENU_VERSION, true );
 	}
 }

@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const menus = document.querySelectorAll('.gw-mm');
-    const plainMenus = document.querySelectorAll('.gw-pm');
+    const menus = document.querySelectorAll('.megamenu');
+    const plainMenus = document.querySelectorAll('.megamenu');
 
     function setDropdownsPosition(menus) {
         menus.forEach(menu => {
             if (menu.classList.contains('is-mobile')) {
-                menu.querySelectorAll('.gw-mm-item__dropdown-wrapper').forEach(dropdown => {
+                menu.querySelectorAll('.megamenu-item__dropdown-wrapper').forEach(dropdown => {
                     dropdown.style.left = '';
                     dropdown.style.width = '';
                     dropdown.style.maxWidth = '';
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const dropdowns = menu.querySelectorAll('.gw-mm-item__dropdown-wrapper');
+            const dropdowns = menu.querySelectorAll('.megamenu-item__dropdown-wrapper');
             const menuCoords = menu.getBoundingClientRect();
             const maxWidth = menu.dataset.dropdownWidth ? parseInt(menu.dataset.dropdownWidth) : null;
             const windowWidth = window.innerWidth;
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         menus.forEach(menu => {
             const contentWidth = menu.dataset.dropdownContentWidth;
             if (contentWidth) {
-                menu.querySelectorAll('.gw-mm-item__dropdown-content').forEach(content => {
+                menu.querySelectorAll('.megamenu-item__dropdown-content').forEach(content => {
                     content.style.maxWidth = contentWidth + 'px';
                 });
             }
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
             const breakpoint = parseInt(menu.dataset.responsiveBreakpoint);
-            const toggleButtonWrapper = menu.querySelector('.gw-mm__toggle-wrapper');
+            const toggleButtonWrapper = menu.querySelector('.megamenu__toggle-wrapper');
             const windowWidth = window.innerWidth;
 
             if (breakpoint >= windowWidth) {
@@ -66,11 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
         menus.forEach(menu => {
             menu.addEventListener('click', function (event) {
                 const target = event.target;
-                if (target.classList.contains('gw-mm__toggle')) {
+                if (target.classList.contains('megamenu__toggle')) {
                     toggleMobileMenu(target, menu);
                 }
-                if (target.classList.contains('gw-mm-item__toggle')) {
-                    const dropdown = target.closest('.gw-mm-item').querySelector('.gw-mm-item__dropdown-wrapper');
+                if (target.classList.contains('megamenu-item__toggle')) {
+                    const dropdown = target.closest('.megamenu-item').querySelector('.megamenu-item__dropdown-wrapper');
                     toggleMobileMenu(target, dropdown);
                 }
             });
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function setMobileMenuPosition(menus) {
         menus.forEach(menu => {
-            const dropdown = menu.querySelector('.gw-mm__content-wrapper');
+            const dropdown = menu.querySelector('.megamenu__content-wrapper');
             if (!menu.classList.contains('is-mobile')) {
                 if (dropdown) {
                     dropdown.style.left = '';
@@ -103,15 +103,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function setPlainMenusDropdownPosition(menus) {
         menus.forEach(menu => {
-            const dropdowns = menu.querySelectorAll('.gw-pm-item__dropdown');
-            const isInsideMegaMenu = !!menu.closest('.gw-mm');
+            const dropdowns = menu.querySelectorAll('.plainmenu-item__dropdown');
+            const isInsideMegaMenu = !!menu.closest('.megamenu');
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('toleft');
                 const rect = dropdown.getBoundingClientRect();
                 const rightEdgePosition = rect.left + rect.width;
                 let rootWidth;
                 if (isInsideMegaMenu) {
-                    const wrapper = menu.closest('.gw-mm-item__dropdown-wrapper');
+                    const wrapper = menu.closest('.megamenu-item__dropdown-wrapper');
                     const wrapperRect = wrapper.getBoundingClientRect();
                     rootWidth = wrapperRect.left + wrapperRect.width;
                 } else {

@@ -1,5 +1,5 @@
 {
-    "name": "vd-megamenu/menu",
+    "name": "mild-megamenu/menu",
     "title": "",
     "category": "layout",
     "attributes": {
@@ -27,18 +27,6 @@
             "type": "number",
             "default": 600
         },
-        "menuItemFontSize": {
-            "type": "string"
-        },
-        "customMenuItemFontSize": {
-            "type": "string"
-        },
-        "menuItemColor": {
-            "type": "string"
-        },
-        "customMenuItemColor": {
-            "type": "string"
-        },
         "toggleButtonAlignment": {
             "type": "string"
         }
@@ -49,6 +37,22 @@
             "wide",
             "full"
         ],
+        "color": {
+            "link": true,
+            "text": true,
+            "background": true
+        },
+        "typography": {
+            "fontSize": true,
+            "lineHeight": true,
+            "letterSpacing": true,
+            "__experimentalFontStyle": true,
+            "fontStyle": true,
+            "__experimentalFontWeight": true,
+            "fontWeight": true,
+            "textTransform": true
+        },
+        "spacing": true,
         "reusable": false,
         "customClassName": true,
         "lightBlockWrapper": false

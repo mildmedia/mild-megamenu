@@ -1,19 +1,19 @@
-.gw-pm-item {
+.plainmenu-item {
     position: relative;
 
     &.is-opened,
     &.has-child-selected,
     &:hover {
-        > .gw-pm-item__dropdown {
+        >.plainmenu-item__dropdown {
             visibility: visible;
             z-index: 10;
         }
     }
 
     &:first-child {
-        .gw-pm-item__dropdown & {
-            > .gw-pm-item__link {
-                > a {
+        .plainmenu-item__dropdown & {
+            >.plainmenu-item__link {
+                >a {
                     padding-top: .5em;
                 }
             }
@@ -21,9 +21,9 @@
     }
 
     &:last-child {
-        .gw-pm-item__dropdown & {
-            > .gw-pm-item__link {
-                > a {
+        .plainmenu-item__dropdown & {
+            >.plainmenu-item__link {
+                >a {
                     padding-bottom: .5em;
                 }
             }
@@ -41,7 +41,7 @@
     }
 
     &.has-children {
-        > .gw-pm-item__link {
+        >.plainmenu-item__link {
             a {
                 padding-right: 5px;
             }
@@ -49,7 +49,7 @@
     }
 
     .has-text-color {
-        > a {
+        >a {
             color: inherit;
         }
     }
@@ -61,8 +61,6 @@
         position: absolute;
         top: 100%;
         left: 0;
-        background: #fff;
-        box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .05);
 
         &.toleft {
             left: auto;

@@ -16,6 +16,7 @@ import {
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 import {
+	useBlockProps,
 	RichText,
 	InnerBlocks,
 } from '@wordpress/block-editor';
@@ -70,7 +71,8 @@ function MenuItemEdit(props) {
 		if (parentAttributes.expandDropdown) {
 			rootBlockNode = blockNode.closest('.editor-styles-wrapper');
 		} else {
-			rootBlockNode = blockNode.closest('[data-block="' + rootBlockClientId + '"]').querySelector('.wp-block-vd-megamenu');
+			const dataBlockEl = blockNode.closest('[data-block="' + rootBlockClientId + '"]');
+			rootBlockNode = dataBlockEl.querySelector('.wp-block-mild-megamenu') || dataBlockEl;
 		}
 
 		const rootCoords = rootBlockNode.getBoundingClientRect();
@@ -100,15 +102,6 @@ function MenuItemEdit(props) {
 		}
 	}, []);
 
-	useEffect(() => {
-		setAttributes({
-			fontSize: parentAttributes.menuItemFontSize,
-			customFontSize: parentAttributes.customMenuItemFontSize,
-			textColor: parentAttributes.menuItemColor,
-			customTextColor: parentAttributes.customMenuItemColor,
-		});
-	}, []);
-
 	const dropdownWrapperStyle = {
 		left: dropdownPosition.left,
 		width: dropdownPosition.width,
@@ -123,22 +116,21 @@ function MenuItemEdit(props) {
 		maxWidth: parentAttributes.dropdownContentMaxWidth
 	};
 
-	const dropdownClasses = clsx('gw-mm-item__dropdown', {
-		'has-background': attributes.dropdownBackgroundColor || attributes.customDropdownBackgroundColor,
-		[`has-${attributes.dropdownBackgroundColor}-background-color`]: !!attributes.dropdownBackgroundColor,
-	});
+	const dropdownClasses = 'test';
 
 	const itemClasses = clsx(
-		'wp-block-vd-megamenu-item',
-		'gw-mm-item',
+		'wp-block-mild-megamenu-item',
+		'megamenu-item',
 		{
 			'has-child': hasDescendants,
 			'is-opened': showDropdown
 		}
 	);
 
+	const blockProps = useBlockProps({ className: itemClasses, ref: menuItem });
+
 	const itemLinkClasses = clsx(
-		'gw-mm-item__link',
+		'megamenu-item__link',
 		{
 			'has-text-color': attributes.textColor || attributes.customTextColor,
 			[`has-${attributes.textColor}-color`]: !!attributes.textColor,
@@ -153,7 +145,7 @@ function MenuItemEdit(props) {
 
 	return (
 		<>
-			<div className={itemClasses} ref={menuItem}>
+			<div {...blockProps}>
 				<div className={itemLinkClasses} style={itemLinkStyles}>
 					<a>
 						<RichText
@@ -166,7 +158,7 @@ function MenuItemEdit(props) {
 							identifier="text" />
 						{
 							(menuItemHasChildrens) && (
-								<span className="gw-mm-item__dropdown-icon">
+								<span className="megamenu-item__dropdown-icon">
 									<span className="dashicons dashicons-arrow-down"></span>
 								</span>
 							)
@@ -175,9 +167,9 @@ function MenuItemEdit(props) {
 				</div>
 				{
 					(showDropdown) && (
-						<div className='gw-mm-item__dropdown-wrapper' style={dropdownWrapperStyle}>
+						<div className='megamenu-item__dropdown-wrapper' style={dropdownWrapperStyle}>
 							<div className={dropdownClasses} style={dropdownStyle}>
-								<div className='gw-mm-item__dropdown-content' style={dropdownContentStyle}>
+								<div className='megamenu-item__dropdown-content' style={dropdownContentStyle}>
 									<InnerBlocks />
 								</div>
 							</div>
@@ -205,7 +197,7 @@ export default compose([
 		const { clientId } = ownProps;
 		const isParentOfSelectedBlock = hasSelectedInnerBlock(clientId, true);
 		const hasDescendants = !!getBlockCount(clientId);
-		const rootBlockClientId = getBlockParentsByBlockName(clientId, 'vd-megamenu/menu')[0];
+		const rootBlockClientId = getBlockParentsByBlockName(clientId, 'mild-megamenu/menu')[0];
 
 		const parentAttributes = getBlock(rootBlockClientId).attributes;
 

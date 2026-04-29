@@ -1,20 +1,20 @@
 {
-	"name": "vd-megamenu/plain-menu-item",
+	"name": "mild-megamenu/plain-menu-item",
 	"category": "layout",
 	"parent": [
-		"vd-megamenu/plain-menu"
+		"mild-megamenu/plain-menu"
 	],
 	"attributes": {
 		"url": {
 			"type": "string",
 			"default": ""
 		},
-        "id": {
-            "type": "string"
-        },
-        "kind": {
-            "type": "string"
-        },
+		"id": {
+			"type": "string"
+		},
+		"kind": {
+			"type": "string"
+		},
 		"text": {
 			"type": "string"
 		},

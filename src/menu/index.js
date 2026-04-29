@@ -6,12 +6,12 @@ import save from './save';
 import edit from './edit';
 
 registerBlockType(metadata.name, {
-	title: __('Mega Menu', 'vd-megamenu'),
+	title: __('Mega Menu', 'mild-megamenu'),
 	keywords: [
-		__('navigation', 'vd-megamenu'),
-		__('links', 'vd-megamenu')
+		__('navigation', 'mild-megamenu'),
+		__('links', 'mild-megamenu')
 	],
-	icon: 'menu',
+	icon: 'welcome-widgets-menus',
 	category: metadata.category,
 	attributes: metadata.attributes,
 	supports: metadata.supports,

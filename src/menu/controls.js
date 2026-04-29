@@ -1,4 +1,3 @@
-import MPMegaMenuColorPalette from '../custom-controls/color-palette';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 import {
@@ -27,11 +26,7 @@ function Controls(args) {
 	const {
 		setAttributes,
 		attributes,
-		menuItemFontSize,
-		menuItemColor,
-		setMenuItemColor,
 		updateChildBlocksAttributes,
-		fontSizes
 	} = args;
 
 	function setAlignment(alignment) {
@@ -50,29 +45,6 @@ function Controls(args) {
 		});
 	}
 
-	useEffect(() => {
-		updateChildBlocksAttributes({
-			fontSize: menuItemFontSize.slug,
-			customFontSize: menuItemFontSize.slug ? undefined : menuItemFontSize.size,
-		})
-	}, [menuItemFontSize.size]);
-
-
-	useEffect(() => {
-		updateChildBlocksAttributes({
-			textColor: menuItemColor.slug,
-			customTextColor: menuItemColor.slug ? undefined : menuItemColor.color,
-		})
-	}, [menuItemColor.color]);
-
-	const setMenuItemFontSize = (value) => {
-		const fontSizeSlug = getFontSizeObjectByValue(fontSizes, value).slug;
-
-		setAttributes({
-			menuItemFontSize: fontSizeSlug,
-			customMenuItemFontSize: fontSizeSlug ? undefined : value?.toString(),
-		});
-	};
 
 	return (
 		<>
@@ -113,18 +85,6 @@ function Controls(args) {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Styles')} initialOpen={true}>
-					<FontSizePicker
-						fontSizes={fontSizes}
-						value={menuItemFontSize.size}
-						onChange={setMenuItemFontSize}
-					/>
-					<MPMegaMenuColorPalette
-						label={__('Menu Item Color')}
-						disableCustomColors={false}
-						color={menuItemColor.color}
-						onChange={setMenuItemColor}
-						clearable={true}
-					/>
 					<ToggleControl
 						label={__('Expand dropdown')}
 						help={attributes.expandDropdown ? __('Dropdown width same as window width.') : __('Dropdown width same as menu width.')}
@@ -201,17 +161,6 @@ function Controls(args) {
 }
 
 export default compose([
-	withColors({
-		menuItemColor: 'color',
-	}),
-	withFontSizes('menuItemFontSize'),
-	withSelect((select, ownProps) => {
-		const settings = select('core/block-editor').getSettings();
-
-		return {
-			fontSizes: settings.fontSizes
-		}
-	}),
 	withDispatch((dispatch, ownProps, registry) => ({
 		updateChildBlocksAttributes(attributes) {
 			const { updateBlockAttributes } = dispatch('core/block-editor');

@@ -42,8 +42,8 @@ function MenuItemEdit(props) {
 	const showDropdown = isMenuItemSelected && menuItemHasChildrens;
 
 	const itemClasses = clsx(
-		'wp-block-vd-plain-menu-item',
-		'gw-pm-item',
+		'wp-block-mild-plain-menu-item',
+		'plainmenu-item',
 		{
 			'has-child': hasDescendants,
 			'has-child-selected': isParentOfSelectedBlock,
@@ -61,7 +61,7 @@ function MenuItemEdit(props) {
 	}, []);
 
 	const itemLinkClasses = clsx(
-		'gw-pm-item__link',
+		'plainmenu-item__link',
 		{
 			'has-text-color': attributes.textColor || attributes.customTextColor,
 			[`has-${attributes.textColor}-color`]: !!attributes.textColor,
@@ -94,7 +94,7 @@ function MenuItemEdit(props) {
 							identifier="text" />
 						{
 							(menuItemHasChildrens) && (
-								<span className="gw-pm-item__dropdown-icon">
+								<span className="plainmenu-item__dropdown-icon">
 									<span className="dashicons dashicons-arrow-down"></span>
 								</span>
 							)
@@ -103,10 +103,10 @@ function MenuItemEdit(props) {
 				</div>
 				{
 					(isMenuItemSelected) && (
-						<div className='gw-pm-item__dropdown'>
-							<div className='gw-pm-item__dropdown-content'>
+						<div className='plainmenu-item__dropdown'>
+							<div className='plainmenu-item__dropdown-content'>
 								<InnerBlocks
-									allowedBlocks={['vd-megamenu/plain-menu-item']}
+									allowedBlocks={['mild-megamenu/plain-menu-item']}
 									renderAppender={(isSelected && hasDescendants) ||
 										(isImmediateParentOfSelectedBlock &&
 											!selectedBlockHasDescendants)
@@ -147,8 +147,8 @@ export default compose([
 		const selectedBlockHasDescendants = !!getClientIdsOfDescendants([
 			selectedBlockId,
 		])?.length;
-		const rootBlockClientId = getBlockParentsByBlockName(clientId, 'vd-megamenu/plain-menu')[0];
-		const parentItemClientId = getBlockParentsByBlockName(clientId, 'vd-megamenu/plain-menu-item')[0];
+		const rootBlockClientId = getBlockParentsByBlockName(clientId, 'mild-megamenu/plain-menu')[0];
+		const parentItemClientId = getBlockParentsByBlockName(clientId, 'mild-megamenu/plain-menu-item')[0];
 
 		const parentAttributes = getBlock(rootBlockClientId).attributes;
 
@@ -181,7 +181,7 @@ export default compose([
 				const navItems = getClientIdsOfDescendants([ownProps.clientId]);
 				const insertionPoint = navItems.length ? navItems.length : 0;
 
-				const blockToInsert = createBlock('vd-megamenu/plain-menu-item');
+				const blockToInsert = createBlock('mild-megamenu/plain-menu-item');
 
 				insertBlock(blockToInsert, insertionPoint, ownProps.clientId);
 			},

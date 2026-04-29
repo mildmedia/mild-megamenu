@@ -1,7 +1,7 @@
 <?php
 
 
-namespace VdMegaMenu;
+namespace Mild\Plugins\MegaMenu;
 
 
 class MegaMenu extends AbstractBlock {
@@ -22,7 +22,7 @@ class MegaMenu extends AbstractBlock {
 			$collapse_on_mobile ? array('is-collapsible') : array()
 		);
 
-		$html = '<div class="wp-block-vd-megamenu gw-mm ' . esc_attr( implode( ' ', $classes ) ) . '"';
+		$html = '<div class="wp-block-mild-megamenu megamenu ' . esc_attr( implode( ' ', $classes ) ) . '"';
 		if ( isset( $attributes['dropdownMaxWidth'] ) ) {
 			$html .= ' data-dropdown-width="' . absint( $attributes['dropdownMaxWidth'] ) . '"';
 		}
@@ -35,7 +35,7 @@ class MegaMenu extends AbstractBlock {
 		$html .= ' data-responsive-breakpoint="' . $responsive_breakpoint . '"';
 		$html .= '>';
 
-		$html .= '<nav class="gw-mm__wrapper"';
+		$html .= '<nav class="megamenu__wrapper"';
 		if ( isset( $attributes['menuMaxWidth'] ) ) {
 			$html .= ' style="max-width:' . absint( $attributes['menuMaxWidth'] ) . 'px"';
 		}
@@ -44,16 +44,16 @@ class MegaMenu extends AbstractBlock {
 		if ( $collapse_on_mobile ) {
 			$toggle_button_alignment_style = isset( $attributes['toggleButtonAlignment'] ) ? 'style="text-align: ' . esc_attr( $attributes['toggleButtonAlignment'] ) . ';"' : '';
 
-			$button = '<button class="gw-mm__toggle"><span class="dashicons dashicons-menu"></span>' . esc_html__( 'Menu', 'vd-megamenu' ) . '</button>';
-			$button = apply_filters( 'vd-megamenu/blocks/megamenu/mobile-toggle-button', $button, $classes );
+			$button = '<button class="megamenu__toggle"><span class="dashicons dashicons-menu"></span>' . esc_html__( 'Menu', 'mild-megamenu' ) . '</button>';
+			$button = apply_filters( 'mild-megamenu/blocks/megamenu/mobile-toggle-button', $button, $classes );
 
-			$html .= '<div class="gw-mm__toggle-wrapper is-hidden" ' . $toggle_button_alignment_style . '>';
+			$html .= '<div class="megamenu__toggle-wrapper is-hidden" ' . $toggle_button_alignment_style . '>';
 			$html .= $button;
 			$html .= '</div>';
 		}
 
-		$html .= '<div class="gw-mm__content-wrapper">';
-		$html .= '<ul class="gw-mm__content">';
+		$html .= '<div class="megamenu__content-wrapper">';
+		$html .= '<ul class="megamenu__content">';
 		$html .= $content;
 		$html .= '</ul></div></nav></div>';
 
@@ -61,18 +61,18 @@ class MegaMenu extends AbstractBlock {
 	}
 
 	protected function setName() {
-		$this->name = 'vd-megamenu/menu';
+		$this->name = 'mild-megamenu/menu';
 	}
 
 	protected function setStyle() {
-		$this->style = 'vd-megamenu-block-style';
+		$this->style = 'mild-megamenu-block-style';
 	}
 
 	protected function setEditorStyle() {
-		$this->editor_style = 'vd-megamenu-block-editor';
+		$this->editor_style = 'mild-megamenu-block-editor';
 	}
 
 	protected function setEditorScript() {
-		$this->editor_script = 'vd-megamenu-block';
+		$this->editor_script = 'mild-megamenu-block';
 	}
 }

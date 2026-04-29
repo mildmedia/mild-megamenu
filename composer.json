@@ -1,5 +1,5 @@
 {
-    "name": "vegetable-bits/vd-megamenu",
+    "name": "mildmedia/mild-megamenu",
     "type": "wordpress-plugin",
     "description": "Megamenu plugin for Gutenberg WordPress",
     "license": "GPL-2.0+",
@@ -9,7 +9,7 @@
             "npm run build"
         ],
         "post-update-cmd": [
-            "npm install", 
+            "npm install",
             "npm run build"
         ]
     }

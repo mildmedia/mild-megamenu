@@ -1,16 +1,11 @@
 # WordPress Mega Menu Block
 
-![](https://img.shields.io/wordpress/plugin/v/vd-megamenu)
-![](https://img.shields.io/wordpress/plugin/wp-version/vd-megamenu)
-![](https://img.shields.io/wordpress/plugin/dd/vd-megamenu)
-![](https://img.shields.io/wordpress/plugin/installs/vd-megamenu)
-![](https://img.shields.io/wordpress/plugin/rating/vd-megamenu)
 ![](https://img.shields.io/badge/license-GPL--2.0%2B-blue.svg?style=flat)
 
-This plugin is a fork of the [Getwid WordPress Mega Menu block](https://github.com/motopress/getwid-megamenu) because I would like to have some upgrades and customizations.
+This plugin is a fork of [VD-Megamenu](https://github.com/vegetable-bits/vd-megamenu) which in it's own is a fork of [Getwid WordPress Mega Menu block](https://github.com/motopress/getwid-megamenu) with some adjustments and better style supports.
 
 It allows you to build simple and advanced navigation menus the WordPress way with blocks.
-With this [WordPress Mega Menu block](https://wordpress.org/plugins/vd-megamenu/), you'll be able to build and customize menus seamlessly using dedicated WP navigation blocks.
+With this [WordPress Mega Menu block](https://wordpress.org/plugins/mild-megamenu/), you'll be able to build and customize menus seamlessly using dedicated WP navigation blocks.
 
 The WordPress Mega Menu block comprises several navigation blocks:
 

@@ -1,0 +1,134 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1777466468599,
+  "projectRoot": "/Users/johan/projects/kgm/app/wp-content/plugins/mild-megamenu-main",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "PHP",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "composer.json"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "composer",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "npm run start",
+    "scripts": {
+      "start": "wp-scripts start src/index.js src/frontend.js",
+      "build": "wp-scripts build src/index.js src/frontend.js",
+      "format:js": "wp-scripts format-js",
+      "lint:js": "wp-scripts lint-js"
+    }
+  },
+  "conventions": {
+    "namingStyle": "camelCase",
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "src"
+    ],
+    "gitBranches": {
+      "defaultBranch": "master",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "build": {
+      "path": "build",
+      "purpose": "Build output",
+      "fileCount": 8,
+      "lastAccessed": 1777466468564,
+      "keyFiles": [
+        "frontend.asset.php",
+        "frontend.js",
+        "index-rtl.css",
+        "index.asset.php",
+        "index.css"
+      ]
+    },
+    "includes": {
+      "path": "includes",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1777466468575,
+      "keyFiles": [
+        "BlockRegister.php"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 5,
+      "lastAccessed": 1777466468579,
+      "keyFiles": [
+        "editor-style.css",
+        "frontend.js",
+        "index.css",
+        "index.js",
+        "style.scss"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src/menu-item/edit.js",
+      "accessCount": 6,
+      "lastAccessed": 1777466780121,
+      "type": "file"
+    },
+    {
+      "path": "src/menu/edit.js",
+      "accessCount": 4,
+      "lastAccessed": 1777466603792,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item/save.js",
+      "accessCount": 2,
+      "lastAccessed": 1777466568335,
+      "type": "file"
+    },
+    {
+      "path": "src/menu/save.js",
+      "accessCount": 2,
+      "lastAccessed": 1777466568549,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item/block.json",
+      "accessCount": 1,
+      "lastAccessed": 1777466510139,
+      "type": "file"
+    },
+    {
+      "path": "src/menu/block.json",
+      "accessCount": 1,
+      "lastAccessed": 1777466510543,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

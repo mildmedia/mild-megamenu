@@ -5,3 +5,5 @@ import './plain-menu-item';
 
 import './style.scss';
 import './index.css';
+
+import './editor-style.css';
