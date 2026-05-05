@@ -9,21 +9,18 @@ import Controls from "./controls";
  */
 import { __ } from '@wordpress/i18n';
 import {
-	useState,
 	useEffect,
 	useRef
 } from '@wordpress/element';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
+import { createBlock } from '@wordpress/blocks';
 import {
 	useBlockProps,
 	RichText,
 	InnerBlocks,
 } from '@wordpress/block-editor';
 
-/**
- * Internal dependencies
- */
 function MenuItemEdit(props) {
 	const {
 		attributes,
@@ -33,94 +30,56 @@ function MenuItemEdit(props) {
 		mergeBlocks,
 		isParentOfSelectedBlock,
 		hasDescendants,
-		updateInnerBlocks,
+		addDropdown,
+		removeDropdown,
 		rootBlockClientId,
-		parentAttributes
+		parentAttributes,
 	} = props;
-	const {
-		text,
-	} = attributes;
 
+	const { text, dropdownAlignment } = attributes;
 	const itemLabelPlaceholder = __('Add link…');
-	const [isItemDropdownOpened, setIsItemDropdownOpened] = useState(hasDescendants);
 	const isMenuItemSelected = isSelected || isParentOfSelectedBlock;
-	const menuItemHasChildrens = isItemDropdownOpened || hasDescendants;
-	const showDropdown = isMenuItemSelected && menuItemHasChildrens;
-	const [dropdownPosition, setDropdownPosition] = useState({ left: 0, width: 'auto' });
+	const showDropdown = isMenuItemSelected && hasDescendants;
 	const menuItem = useRef(null);
+	const dropdownWrapper = useRef(null);
 
 	const toggleItemDropdown = () => {
-		setIsItemDropdownOpened(!isItemDropdownOpened);
 		if (hasDescendants) {
-			updateInnerBlocks();
-		}
-		return false;
-	};
-
-	const updateDropdownPosition = () => {
-		let newDropdownPosition = {};
-		let rootBlockNode;
-		const blockNode = menuItem.current;
-
-		if (!blockNode) {
-			return;
-		}
-
-		const blockCoords = blockNode.getBoundingClientRect();
-
-		if (parentAttributes.expandDropdown) {
-			rootBlockNode = blockNode.closest('.editor-styles-wrapper');
+			removeDropdown();
 		} else {
-			const dataBlockEl = blockNode.closest('[data-block="' + rootBlockClientId + '"]');
-			rootBlockNode = dataBlockEl.querySelector('.wp-block-mild-megamenu') || dataBlockEl;
-		}
-
-		const rootCoords = rootBlockNode.getBoundingClientRect();
-
-		let left = -(blockCoords.x - rootCoords.x);
-
-		if (parentAttributes.dropdownMaxWidth && rootCoords.width > parentAttributes.dropdownMaxWidth) {
-			left = left + (rootCoords.width - parentAttributes.dropdownMaxWidth) / 2;
-		}
-
-		newDropdownPosition = { left: left, width: rootCoords.width };
-
-		if (newDropdownPosition.left !== dropdownPosition.left
-			|| newDropdownPosition.width !== dropdownPosition.width) {
-			setDropdownPosition(newDropdownPosition);
+			addDropdown();
 		}
 	};
 
 	useEffect(() => {
-		updateDropdownPosition();
-	}, [isSelected]);
+		if (!parentAttributes?.expandDropdown || !menuItem.current || !dropdownWrapper.current) return;
 
-	useEffect(() => {
-		const blockNode = menuItem.current;
-		if (blockNode) {
-			blockNode.ownerDocument.defaultView.addEventListener('resize', updateDropdownPosition);
-		}
-	}, []);
+		const editorEl = menuItem.current.closest('.is-root-container');
+		if (!editorEl) return;
 
-	const dropdownWrapperStyle = {
-		left: dropdownPosition.left,
-		width: dropdownPosition.width,
-		maxWidth: parentAttributes.dropdownMaxWidth
-	};
+		const calculate = () => {
 
-	const dropdownStyle = {
-		backgroundColor: attributes.customDropdownBackgroundColor
-	};
+			// find first is-layout-constrained ancestor and it's child to get the correct width and left offset for the dropdown
+			const rootGroupEl = editorEl.querySelector(`.is-layout-constrained`)?.firstElementChild;
+			const editorRect = rootGroupEl ? rootGroupEl.getBoundingClientRect() : editorEl.getBoundingClientRect();
+			const itemRect = menuItem.current.getBoundingClientRect();
+			const editorStyles = window.getComputedStyle(editorEl);
+			const paddingLeft = parseFloat(editorStyles.paddingLeft) || 0;
+			const paddingRight = parseFloat(editorStyles.paddingRight) || 0;
 
-	const dropdownContentStyle = {
-		maxWidth: parentAttributes.dropdownContentMaxWidth
-	};
+			dropdownWrapper.current.style.left = (editorRect.left + paddingLeft - itemRect.left) + 'px';
+			dropdownWrapper.current.style.width = (editorRect.width - paddingLeft - paddingRight) - 20 + 'px';
+		};
 
-	const dropdownClasses = 'test';
+		calculate();
+		const observer = new ResizeObserver(calculate);
+		observer.observe(editorEl);
+		return () => observer.disconnect();
+	}, [parentAttributes?.expandDropdown, showDropdown]);
 
 	const itemClasses = clsx(
 		'wp-block-mild-megamenu-item',
-		'megamenu-item',
+		'menu-item',
 		{
 			'has-child': hasDescendants,
 			'is-opened': showDropdown
@@ -130,7 +89,7 @@ function MenuItemEdit(props) {
 	const blockProps = useBlockProps({ className: itemClasses, ref: menuItem });
 
 	const itemLinkClasses = clsx(
-		'megamenu-item__link',
+		'menu-item-link',
 		{
 			'has-text-color': attributes.textColor || attributes.customTextColor,
 			[`has-${attributes.textColor}-color`]: !!attributes.textColor,
@@ -156,31 +115,26 @@ function MenuItemEdit(props) {
 							onReplace={onReplace}
 							onMerge={mergeBlocks}
 							identifier="text" />
-						{
-							(menuItemHasChildrens) && (
-								<span className="megamenu-item__dropdown-icon">
-									<span className="dashicons dashicons-arrow-down"></span>
-								</span>
-							)
-						}
+						{hasDescendants && (
+							<span className="menu-item-dropdown-icon">
+								<span className="dashicons dashicons-arrow-down"></span>
+							</span>
+						)}
 					</a>
 				</div>
-				{
-					(showDropdown) && (
-						<div className='megamenu-item__dropdown-wrapper' style={dropdownWrapperStyle}>
-							<div className={dropdownClasses} style={dropdownStyle}>
-								<div className='megamenu-item__dropdown-content' style={dropdownContentStyle}>
-									<InnerBlocks />
-								</div>
-							</div>
-						</div>
-					)
-				}
+				{showDropdown && (
+					<div ref={dropdownWrapper} className={`dropdown-wrapper align-${dropdownAlignment || 'center'}`}>
+						<InnerBlocks
+							allowedBlocks={['mild-megamenu/menu-item-dropdown']}
+							renderAppender={false}
+						/>
+					</div>
+				)}
 			</div>
 			<Controls
 				{...props}
 				toggleItemDropdown={toggleItemDropdown}
-				isItemDropdownOpened={isItemDropdownOpened}
+				hasDescendants={hasDescendants}
 			/>
 		</>
 	);
@@ -190,32 +144,31 @@ export default compose([
 	withSelect((select, ownProps) => {
 		const {
 			hasSelectedInnerBlock,
-			getBlockCount,
 			getBlockParentsByBlockName,
-			getBlock
+			getBlock,
+			getBlocks,
 		} = select('core/block-editor');
 		const { clientId } = ownProps;
 		const isParentOfSelectedBlock = hasSelectedInnerBlock(clientId, true);
-		const hasDescendants = !!getBlockCount(clientId);
+		const innerBlocks = getBlocks(clientId);
+		const hasDescendants = innerBlocks.some(b => b.name === 'mild-megamenu/menu-item-dropdown');
 		const rootBlockClientId = getBlockParentsByBlockName(clientId, 'mild-megamenu/menu')[0];
-
 		const parentAttributes = getBlock(rootBlockClientId).attributes;
-
 		return {
 			isParentOfSelectedBlock,
 			hasDescendants,
 			rootBlockClientId,
-			parentAttributes
+			parentAttributes,
 		};
 	}),
 	withDispatch((dispatch, { clientId }) => {
 		return {
-			updateInnerBlocks(blocks) {
-				dispatch('core/block-editor').replaceInnerBlocks(
-					clientId,
-					[],
-					false
-				);
+			addDropdown() {
+				const dropdownBlock = createBlock('mild-megamenu/menu-item-dropdown');
+				dispatch('core/block-editor').replaceInnerBlocks(clientId, [dropdownBlock], false);
+			},
+			removeDropdown() {
+				dispatch('core/block-editor').replaceInnerBlocks(clientId, [], false);
 			},
 		};
 	}),

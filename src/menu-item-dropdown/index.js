@@ -7,11 +7,10 @@ import edit from './edit';
 
 registerBlockType(metadata.name, {
 	apiVersion: metadata.apiVersion,
-	title: __('Plain Menu Item', 'mild-megamenu'),
-	icon: 'admin-links',
+	title: __('Menu Item Dropdown', 'mild-megamenu'),
+	icon: 'arrow-down-alt2',
 	category: metadata.category,
 	parent: metadata.parent,
-	attributes: metadata.attributes,
 	supports: metadata.supports,
 	edit,
 	save

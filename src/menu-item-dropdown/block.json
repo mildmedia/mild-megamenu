@@ -1,0 +1,20 @@
+{
+    "apiVersion": 3,
+    "name": "mild-megamenu/menu-item-dropdown",
+    "title": "Mega Menu Dropdown",
+    "category": "layout",
+    "parent": ["mild-megamenu/menu-item"],
+    "attributes": {},
+    "supports": {
+        "color": {
+            "background": true,
+            "text": false,
+            "gradients": false
+        },
+        "spacing": {
+            "padding": true
+        },
+        "reusable": false,
+        "customClassName": false
+    }
+}

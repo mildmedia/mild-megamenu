@@ -16,7 +16,7 @@ namespace Mild\Plugins\MegaMenu;
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MILD_MEGAMENU_VERSION', '1.1.0' );
+define( 'MILD_MEGAMENU_VERSION', '1.1.1' );
 define( 'MILD_MEGAMENU_FILE', __FILE__ );
 
 if ( ! function_exists( 'megamenu_init' ) && function_exists( 'register_block_type' ) ) {

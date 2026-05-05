@@ -1,4 +1,5 @@
 {
+    "apiVersion": 3,
     "name": "mild-megamenu/menu",
     "title": "",
     "category": "layout",
@@ -10,15 +11,6 @@
             "type": "boolean",
             "default": false
         },
-        "menuMaxWidth": {
-            "type": "number"
-        },
-        "dropdownMaxWidth": {
-            "type": "number"
-        },
-        "dropdownContentMaxWidth": {
-            "type": "number"
-        },
         "collapseOnMobile": {
             "type": "boolean",
             "default": true
@@ -29,6 +21,12 @@
         },
         "toggleButtonAlignment": {
             "type": "string"
+        },
+        "linkPaddingHorizontal": {
+            "type": "number"
+        },
+        "linkPaddingVertical": {
+            "type": "number"
         }
     },
     "supports": {
@@ -50,6 +48,10 @@
             "fontStyle": true,
             "__experimentalFontWeight": true,
             "fontWeight": true,
+            "__experimentalFontFamily": true,
+            "__experimentalTextDecoration": true,
+            "textDecoration": true,
+            "fontFamily": true,
             "textTransform": true
         },
         "spacing": true,

@@ -14,6 +14,7 @@ import {
 	ToolbarButton,
 	ToolbarGroup,
 	Popover,
+	SelectControl,
 } from '@wordpress/components';
 import {
 	BlockControls,
@@ -28,7 +29,8 @@ function Controls(args) {
 		isSelected,
 		attributes,
 		setAttributes,
-		toggleItemDropdown
+		toggleItemDropdown,
+		hasDescendants,
 	} = args;
 
 	const {
@@ -166,6 +168,30 @@ function Controls(args) {
 						onChange={onSetLinkRel}
 					/>
 				</PanelBody>
+				{hasDescendants && (
+					<PanelBody title={__('Dropdown settings')}>
+						<SelectControl
+							label={__('Open on')}
+							value={attributes.triggerType || 'hover'}
+							options={[
+								{ label: __('Hover'), value: 'hover' },
+								{ label: __('Click'), value: 'click' },
+							]}
+							onChange={(triggerType) => setAttributes({ triggerType })}
+						/>
+						<SelectControl
+							label={__('Content alignment')}
+							value={attributes.dropdownAlignment || 'center'}
+							options={[
+								{ label: __('Left'), value: 'left' },
+								{ label: __('Center'), value: 'center' },
+								{ label: __('Right'), value: 'right' },
+								{ label: __('Align to item'), value: 'item' },
+							]}
+							onChange={(dropdownAlignment) => setAttributes({ dropdownAlignment })}
+						/>
+					</PanelBody>
+				)}
 			</InspectorControls>
 		</>
 	);

@@ -2,44 +2,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const menus = document.querySelectorAll('.megamenu');
     const plainMenus = document.querySelectorAll('.megamenu');
 
-    function setDropdownsPosition(menus) {
+    function setDropdownAlignment(menus) {
         menus.forEach(menu => {
-            if (menu.classList.contains('is-mobile')) {
-                menu.querySelectorAll('.megamenu-item__dropdown-wrapper').forEach(dropdown => {
-                    dropdown.style.left = '';
-                    dropdown.style.width = '';
-                    dropdown.style.maxWidth = '';
-                });
+
+            if (menu.classList.contains('is-mobile') || !menu.classList.contains('has-full-width-dropdown')) {
                 return;
             }
 
-            const dropdowns = menu.querySelectorAll('.megamenu-item__dropdown-wrapper');
-            const menuCoords = menu.getBoundingClientRect();
-            const maxWidth = menu.dataset.dropdownWidth ? parseInt(menu.dataset.dropdownWidth) : null;
-            const windowWidth = window.innerWidth;
-            const width = menu.classList.contains('has-full-width-dropdown') ? windowWidth : menu.offsetWidth;
-            let left = menu.classList.contains('has-full-width-dropdown') ? -menuCoords.left : 0;
-
-            if (maxWidth && maxWidth < width) {
-                left = left + (width - maxWidth) / 2;
-            }
-
-            dropdowns.forEach(dropdown => {
-                dropdown.style.left = left + 'px';
-                dropdown.style.width = width + 'px';
-                dropdown.style.maxWidth = maxWidth ? maxWidth + 'px' : '';
+            menu.querySelectorAll('.dropdown-wrapper.align-item').forEach(wrapper => {
+                const menuItem = wrapper.closest('.menu-item');
+                const content = wrapper.querySelector('.dropdown-content');
+                if (!menuItem || !content) return;
+                const itemRect = menuItem.getBoundingClientRect();
+                const wrapperRect = wrapper.getBoundingClientRect();
+                content.style.marginLeft = (itemRect.left - wrapperRect.left) + 'px';
             });
-        });
-    }
-
-    function setDropdownsContentWidth(menus) {
-        menus.forEach(menu => {
-            const contentWidth = menu.dataset.dropdownContentWidth;
-            if (contentWidth) {
-                menu.querySelectorAll('.megamenu-item__dropdown-content').forEach(content => {
-                    content.style.maxWidth = contentWidth + 'px';
-                });
-            }
         });
     }
 
@@ -49,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
             const breakpoint = parseInt(menu.dataset.responsiveBreakpoint);
-            const toggleButtonWrapper = menu.querySelector('.megamenu__toggle-wrapper');
+            const toggleButtonWrapper = menu.querySelector('.megamenu-toggle-wrapper');
             const windowWidth = window.innerWidth;
 
             if (breakpoint >= windowWidth) {
@@ -63,17 +40,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function attachToggleActionToButtons(menus) {
-        menus.forEach(menu => {
-            menu.addEventListener('click', function (event) {
-                const target = event.target;
-                if (target.classList.contains('megamenu__toggle')) {
-                    toggleMobileMenu(target, menu);
-                }
-                if (target.classList.contains('megamenu-item__toggle')) {
-                    const dropdown = target.closest('.megamenu-item').querySelector('.megamenu-item__dropdown-wrapper');
+
+        document.addEventListener('click', function (event) {
+            const target = event.target;
+            console.log('click document', target);
+            if (target.closest('.menu-item.has-click-trigger')) {
+                event.preventDefault();
+                console.log('click trigger open submenu?');
+                const menuItem = target.closest('.menu-item');
+                menuItem.classList.toggle('is-opened');
+                return;
+            }
+
+            if (target.classList.contains('megamenu-toggle')) {
+                toggleMobileMenu(target, menu);
+            }
+            if (target.classList.contains('menu-item-toggle')) {
+                console.log('toggle-mobile-menu');
+                const menuItem = target.closest('.menu-item');
+                const dropdown = menuItem.querySelector('.dropdown-wrapper');
+                if (menu.classList.contains('is-mobile') || !menuItem.classList.contains('has-click-trigger')) {
                     toggleMobileMenu(target, dropdown);
+                } else {
+                    menuItem.classList.toggle('is-opened');
                 }
-            });
+            }
         });
     }
 
@@ -84,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function setMobileMenuPosition(menus) {
         menus.forEach(menu => {
-            const dropdown = menu.querySelector('.megamenu__content-wrapper');
+            const dropdown = menu.querySelector('.megamenu-content-wrapper');
             if (!menu.classList.contains('is-mobile')) {
                 if (dropdown) {
                     dropdown.style.left = '';
@@ -101,44 +92,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function setPlainMenusDropdownPosition(menus) {
-        menus.forEach(menu => {
-            const dropdowns = menu.querySelectorAll('.plainmenu-item__dropdown');
-            const isInsideMegaMenu = !!menu.closest('.megamenu');
-            dropdowns.forEach(dropdown => {
-                dropdown.classList.remove('toleft');
-                const rect = dropdown.getBoundingClientRect();
-                const rightEdgePosition = rect.left + rect.width;
-                let rootWidth;
-                if (isInsideMegaMenu) {
-                    const wrapper = menu.closest('.megamenu-item__dropdown-wrapper');
-                    const wrapperRect = wrapper.getBoundingClientRect();
-                    rootWidth = wrapperRect.left + wrapperRect.width;
-                } else {
-                    rootWidth = window.innerWidth;
-                }
-                let isLeft = false;
-                if (rightEdgePosition >= rootWidth) {
-                    isLeft = true;
-                }
-                if (isLeft) {
-                    dropdown.classList.add('toleft');
-                }
-            });
-        });
-    }
-
     showMenuToggleButton(menus);
     attachToggleActionToButtons(menus);
-    setDropdownsPosition(menus);
-    setDropdownsContentWidth(menus);
-    setMobileMenuPosition(menus);
-    setPlainMenusDropdownPosition(plainMenus);
+    setDropdownAlignment(menus);
 
     window.addEventListener('resize', function () {
         showMenuToggleButton(menus);
-        setDropdownsPosition(menus);
-        setMobileMenuPosition(menus);
-        setPlainMenusDropdownPosition(plainMenus);
+        setDropdownAlignment(menus);
     });
 });

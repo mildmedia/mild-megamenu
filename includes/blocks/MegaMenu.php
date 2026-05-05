@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Mild\Plugins\MegaMenu;
 
 
@@ -14,28 +12,33 @@ class MegaMenu extends AbstractBlock {
 
 		$collapse_on_mobile = ! isset( $attributes['collapseOnMobile'] ) || $attributes['collapseOnMobile'];
 
-		$classes = array_merge(
-			isset( $attributes['className'] ) ? array( $attributes['className'] ) : array(),
-			isset( $attributes['align'] ) ? array( 'align' . $attributes['align'] ) : array(),
-			isset( $attributes['itemsJustification'] ) ? array( 'justify-items-' . $attributes['itemsJustification'] ) : array(),
-			isset( $attributes['expandDropdown'] ) && $attributes['expandDropdown'] ? array( 'has-full-width-dropdown' ) : array(),
-			$collapse_on_mobile ? array('is-collapsible') : array()
-		);
+		$extra_classes = array_filter( array_merge(
+			[ 'megamenu' ],
+			isset( $attributes['align'] ) ? [ 'align' . $attributes['align'] ] : [],
+			isset( $attributes['itemsJustification'] ) ? [ 'justify-items-' . $attributes['itemsJustification'] ] : [],
+			isset( $attributes['expandDropdown'] ) && $attributes['expandDropdown'] ? [ 'has-full-width-dropdown' ] : [],
+			$collapse_on_mobile ? [ 'is-collapsible' ] : []
+		) );
 
-		$html = '<div class="wp-block-mild-megamenu megamenu ' . esc_attr( implode( ' ', $classes ) ) . '"';
-		if ( isset( $attributes['dropdownMaxWidth'] ) ) {
-			$html .= ' data-dropdown-width="' . absint( $attributes['dropdownMaxWidth'] ) . '"';
+		$wrapper_attrs = [ 'class' => implode( ' ', $extra_classes ) ];
+
+
+		$wrapper_attrs['data-responsive-breakpoint'] = isset( $attributes['responsiveBreakpoint'] ) ? absint( $attributes['responsiveBreakpoint'] ) : 782;
+
+		$block_id = wp_unique_id( 'megamenu-' );
+		$wrapper_attrs['id'] = $block_id;
+
+		$html = '';
+		if ( isset( $attributes['linkPaddingHorizontal'] ) || isset( $attributes['linkPaddingVertical'] ) ) {
+			$h    = isset( $attributes['linkPaddingHorizontal'] ) ? absint( $attributes['linkPaddingHorizontal'] ) . 'px' : '0';
+			$v    = isset( $attributes['linkPaddingVertical'] ) ? absint( $attributes['linkPaddingVertical'] ) . 'px' : '0';
+			$sel  = "#{$block_id}>.megamenu-wrapper>.megamenu-content-wrapper>.megamenu-content>.menu-item>.menu-item-link>a";
+			$html .= "<style>{$sel}{padding:{$v} {$h}}</style>";
 		}
-		if ( isset( $attributes['dropdownContentMaxWidth'] ) ) {
-			$html .= ' data-dropdown-content-width="' . absint( $attributes['dropdownContentMaxWidth'] ) . '"';
-		}
 
-		$responsive_breakpoint = isset( $attributes['responsiveBreakpoint'] ) ? absint( $attributes['responsiveBreakpoint'] ) : 782;
+		$html .= '<div ' . get_block_wrapper_attributes( $wrapper_attrs ) . '>';
 
-		$html .= ' data-responsive-breakpoint="' . $responsive_breakpoint . '"';
-		$html .= '>';
-
-		$html .= '<nav class="megamenu__wrapper"';
+		$html .= '<nav class="megamenu-wrapper"';
 		if ( isset( $attributes['menuMaxWidth'] ) ) {
 			$html .= ' style="max-width:' . absint( $attributes['menuMaxWidth'] ) . 'px"';
 		}
@@ -44,16 +47,16 @@ class MegaMenu extends AbstractBlock {
 		if ( $collapse_on_mobile ) {
 			$toggle_button_alignment_style = isset( $attributes['toggleButtonAlignment'] ) ? 'style="text-align: ' . esc_attr( $attributes['toggleButtonAlignment'] ) . ';"' : '';
 
-			$button = '<button class="megamenu__toggle"><span class="dashicons dashicons-menu"></span>' . esc_html__( 'Menu', 'mild-megamenu' ) . '</button>';
-			$button = apply_filters( 'mild-megamenu/blocks/megamenu/mobile-toggle-button', $button, $classes );
+			$button = '<button class="megamenu-toggle"><span class="dashicons dashicons-menu"></span>' . esc_html__( 'Menu', 'mild-megamenu' ) . '</button>';
+			$button = apply_filters( 'mild-megamenu/blocks/megamenu/mobile-toggle-button', $button, $extra_classes );
 
-			$html .= '<div class="megamenu__toggle-wrapper is-hidden" ' . $toggle_button_alignment_style . '>';
+			$html .= '<div class="megamenu-toggle-wrapper is-hidden" ' . $toggle_button_alignment_style . '>';
 			$html .= $button;
 			$html .= '</div>';
 		}
 
-		$html .= '<div class="megamenu__content-wrapper">';
-		$html .= '<ul class="megamenu__content">';
+		$html .= '<div class="megamenu-content-wrapper">';
+		$html .= '<ul class="megamenu-content">';
 		$html .= $content;
 		$html .= '</ul></div></nav></div>';
 

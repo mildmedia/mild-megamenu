@@ -1,32 +1,26 @@
 import { __ } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
 import {
 	BlockControls,
-	InspectorControls,
-	withFontSizes,
-	withColors,
-	getFontSizeObjectByValue
+	InspectorControls
 } from '@wordpress/block-editor';
 import {
-	PanelBody,
-	ToolbarDropdownMenu,
-	ToolbarButton,
-	ToolbarGroup,
-	RangeControl,
 	BaseControl,
 	ButtonGroup,
 	Button,
+	PanelBody,
+	RangeControl,
 	ToggleControl,
-	FontSizePicker
+	ToolbarDropdownMenu,
+	ToolbarButton,
+	ToolbarGroup
 } from '@wordpress/components';
-import { withDispatch, withSelect } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
 
 function Controls(args) {
 	const {
 		setAttributes,
 		attributes,
 		updateChildBlocksAttributes,
+		setIsAdjusting,
 	} = args;
 
 	function setAlignment(alignment) {
@@ -39,12 +33,17 @@ function Controls(args) {
 		}
 	}
 
+	function setLinkPadding(value, dimension) {
+		const numValue = value !== undefined && value !== '' ? Number(value) : undefined;
+		const attributeName = dimension === 'horizontal' ? 'linkPaddingHorizontal' : 'linkPaddingVertical';
+		setAttributes({ [attributeName]: numValue });
+	}
+
 	function expandDropdown() {
 		setAttributes({
 			expandDropdown: !attributes.expandDropdown,
 		});
 	}
-
 
 	return (
 		<>
@@ -84,35 +83,30 @@ function Controls(args) {
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Styles')} initialOpen={true}>
+				<PanelBody title={__('Settings')} initialOpen={true}>
 					<ToggleControl
 						label={__('Expand dropdown')}
 						help={attributes.expandDropdown ? __('Dropdown width same as window width.') : __('Dropdown width same as menu width.')}
 						checked={attributes.expandDropdown}
 						onChange={expandDropdown}
 					/>
-				</PanelBody>
-				<PanelBody title={__('Width Settings')} initialOpen={false}>
 					<RangeControl
-						label={__('Maximum width of top-level menu in pixels')}
-						value={attributes.menuMaxWidth}
-						onChange={(value) => setAttributes({ menuMaxWidth: value })}
+						label={__('Link padding x')}
+						value={attributes.linkPaddingHorizontal ?? 0}
+						onChange={(value) => setLinkPadding(value, 'horizontal')}
+						onFocus={() => setIsAdjusting(true)}
+						onBlur={() => setIsAdjusting(false)}
 						min={0}
-						max={2000}
+						max={50}
 					/>
 					<RangeControl
-						label={__('Maximum width of dropdown in pixels')}
-						value={attributes.dropdownMaxWidth}
-						onChange={(dropdownMaxWidth) => setAttributes({ dropdownMaxWidth })}
+						label={__('Link padding y')}
+						value={attributes.linkPaddingVertical ?? 0}
+						onChange={(value) => setLinkPadding(value, 'vertical')}
+						onFocus={() => setIsAdjusting(true)}
+						onBlur={() => setIsAdjusting(false)}
 						min={0}
-						max={2000}
-					/>
-					<RangeControl
-						label={__('Maximum width of dropdown content in pixels')}
-						value={attributes.dropdownContentMaxWidth}
-						onChange={(dropdownContentMaxWidth) => setAttributes({ dropdownContentMaxWidth })}
-						min={0}
-						max={2000}
+						max={50}
 					/>
 				</PanelBody>
 				<PanelBody title={__('Responsive Settings')} initialOpen={false}>
@@ -160,19 +154,4 @@ function Controls(args) {
 	)
 }
 
-export default compose([
-	withDispatch((dispatch, ownProps, registry) => ({
-		updateChildBlocksAttributes(attributes) {
-			const { updateBlockAttributes } = dispatch('core/block-editor');
-			const {
-				getBlocksByClientId
-			} = registry.select('core/block-editor');
-
-			const menuItems = getBlocksByClientId(ownProps.clientId)[0].innerBlocks;
-
-			menuItems.forEach((menuItem) => {
-				updateBlockAttributes(menuItem.clientId, { ...attributes });
-			})
-		}
-	}))
-])(Controls);
+export default Controls;

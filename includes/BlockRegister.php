@@ -1,8 +1,5 @@
 <?php
-
-
 namespace Mild\Plugins\MegaMenu;
-
 
 class BlockRegister {
 
@@ -47,6 +44,7 @@ class BlockRegister {
 		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/AbstractBlock.php' );
 		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/MegaMenu.php' );
 		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/MegaMenuItem.php' );
+		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/MegaMenuItemDropdown.php' );
 		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/PlainMenu.php' );
 		include_once( plugin_dir_path( MILD_MEGAMENU_FILE ) . 'includes/blocks/PlainMenuItem.php' );
 	}
@@ -56,11 +54,12 @@ class BlockRegister {
 
 		new MegaMenu();
 		new MegaMenuItem();
+		new MegaMenuItemDropdown();
 		new PlainMenu();
 		new PlainMenuItem();
 	}
 
 	public function enqueue_frontend_assets() {
-		wp_enqueue_script( 'mild-megamenu-block-frontend', plugins_url( 'build/frontend.js', MILD_MEGAMENU_FILE ), [ 'jquery' ], MILD_MEGAMENU_VERSION, true );
+		wp_enqueue_script( 'mild-megamenu-block-frontend', plugins_url( 'build/frontend.js', MILD_MEGAMENU_FILE ), [ 'jquery' ], time(), true );
 	}
 }

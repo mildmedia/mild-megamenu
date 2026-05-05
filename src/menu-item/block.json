@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "mild-megamenu/menu-item",
 	"category": "layout",
 	"parent": [
@@ -23,6 +24,14 @@
 		},
 		"rel": {
 			"type": "string"
+		},
+		"triggerType": {
+			"type": "string",
+			"default": "hover"
+		},
+		"dropdownAlignment": {
+			"type": "string",
+			"default": "center"
 		}
 	},
 	"supports": {
@@ -38,7 +47,14 @@
 			"duotone": false
 		},
 		"typography": {
-			"fontSize": true
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"fontFamily": true,
+			"lineHeight": true,
+			"letterSpacing": true,
+			"fontStyle": true,
+			"__experimentalFontWeight": true,
+			"fontWeight": true
 		},
 		"lightBlockWrapper": false
 	},

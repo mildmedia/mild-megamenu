@@ -1,4 +1,5 @@
-.megamenu-item__dropdown-wrapper {
-    border: 1px dashed #ccc;
-    background: #fff;
+/* Editor-specific styles */
+
+.megamenu-item__dropdown-content.dropdown-align-content {
+    right: auto;
 }

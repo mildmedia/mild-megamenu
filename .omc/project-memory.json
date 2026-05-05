@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1777466468599,
+  "lastScanned": 1777905373051,
   "projectRoot": "/Users/johan/projects/kgm/app/wp-content/plugins/mild-megamenu-main",
   "techStack": {
     "languages": [
@@ -49,10 +49,7 @@
     "mainDirectories": [
       "src"
     ],
-    "gitBranches": {
-      "defaultBranch": "master",
-      "branchingStrategy": null
-    }
+    "gitBranches": null
   },
   "customNotes": [],
   "directoryMap": {
@@ -60,7 +57,7 @@
       "path": "build",
       "purpose": "Build output",
       "fileCount": 8,
-      "lastAccessed": 1777466468564,
+      "lastAccessed": 1777905373009,
       "keyFiles": [
         "frontend.asset.php",
         "frontend.js",
@@ -72,8 +69,8 @@
     "includes": {
       "path": "includes",
       "purpose": null,
-      "fileCount": 1,
-      "lastAccessed": 1777466468575,
+      "fileCount": 2,
+      "lastAccessed": 1777905373027,
       "keyFiles": [
         "BlockRegister.php"
       ]
@@ -81,52 +78,238 @@
     "src": {
       "path": "src",
       "purpose": "Source code",
-      "fileCount": 5,
-      "lastAccessed": 1777466468579,
+      "fileCount": 6,
+      "lastAccessed": 1777905373028,
       "keyFiles": [
         "editor-style.css",
         "frontend.js",
         "index.css",
         "index.js",
-        "style.scss"
+        "style.css"
       ]
     }
   },
   "hotPaths": [
     {
       "path": "src/menu-item/edit.js",
-      "accessCount": 6,
-      "lastAccessed": 1777466780121,
+      "accessCount": 33,
+      "lastAccessed": 1777976622572,
       "type": "file"
     },
     {
       "path": "src/menu/edit.js",
-      "accessCount": 4,
-      "lastAccessed": 1777466603792,
+      "accessCount": 21,
+      "lastAccessed": 1777976506532,
       "type": "file"
     },
     {
-      "path": "src/menu-item/save.js",
-      "accessCount": 2,
-      "lastAccessed": 1777466568335,
+      "path": "src/menu/controls.js",
+      "accessCount": 17,
+      "lastAccessed": 1777975178699,
       "type": "file"
     },
     {
-      "path": "src/menu/save.js",
-      "accessCount": 2,
-      "lastAccessed": 1777466568549,
+      "path": "src/style.css",
+      "accessCount": 14,
+      "lastAccessed": 1777975953163,
       "type": "file"
     },
     {
-      "path": "src/menu-item/block.json",
-      "accessCount": 1,
-      "lastAccessed": 1777466510139,
+      "path": "src/menu-item-dropdown/edit.js",
+      "accessCount": 13,
+      "lastAccessed": 1777975511368,
+      "type": "file"
+    },
+    {
+      "path": "includes/blocks/MegaMenuItem.php",
+      "accessCount": 13,
+      "lastAccessed": 1777975531149,
+      "type": "file"
+    },
+    {
+      "path": "src/frontend.js",
+      "accessCount": 12,
+      "lastAccessed": 1777975506672,
+      "type": "file"
+    },
+    {
+      "path": "includes/blocks/MegaMenu.php",
+      "accessCount": 12,
+      "lastAccessed": 1777975600978,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item-dropdown/save.js",
+      "accessCount": 11,
+      "lastAccessed": 1777975511076,
       "type": "file"
     },
     {
       "path": "src/menu/block.json",
+      "accessCount": 9,
+      "lastAccessed": 1777974822829,
+      "type": "file"
+    },
+    {
+      "path": "includes/blocks/MegaMenuItemDropdown.php",
+      "accessCount": 9,
+      "lastAccessed": 1777975528692,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item-dropdown/block.json",
+      "accessCount": 8,
+      "lastAccessed": 1777973845416,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item/controls.js",
+      "accessCount": 8,
+      "lastAccessed": 1777974756095,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item/block.json",
+      "accessCount": 8,
+      "lastAccessed": 1777974760466,
+      "type": "file"
+    },
+    {
+      "path": "src/menu/style.scss",
+      "accessCount": 7,
+      "lastAccessed": 1777886267653,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item/save.js",
+      "accessCount": 7,
+      "lastAccessed": 1777975528399,
+      "type": "file"
+    },
+    {
+      "path": "src/index.css",
+      "accessCount": 6,
+      "lastAccessed": 1777973399944,
+      "type": "file"
+    },
+    {
+      "path": "src/menu/save.js",
+      "accessCount": 5,
+      "lastAccessed": 1777972946410,
+      "type": "file"
+    },
+    {
+      "path": "src/index.js",
+      "accessCount": 4,
+      "lastAccessed": 1777886415447,
+      "type": "file"
+    },
+    {
+      "path": "includes/blocks/AbstractBlock.php",
+      "accessCount": 4,
+      "lastAccessed": 1777906363516,
+      "type": "file"
+    },
+    {
+      "path": "src/menu/index.js",
+      "accessCount": 4,
+      "lastAccessed": 1777973689719,
+      "type": "file"
+    },
+    {
+      "path": "src/editor-style.css",
+      "accessCount": 3,
+      "lastAccessed": 1777974760780,
+      "type": "file"
+    },
+    {
+      "path": "includes/BlockRegister.php",
+      "accessCount": 2,
+      "lastAccessed": 1777469213713,
+      "type": "file"
+    },
+    {
+      "path": "src/plain-menu/block.json",
+      "accessCount": 2,
+      "lastAccessed": 1777472550284,
+      "type": "file"
+    },
+    {
+      "path": "src/plain-menu-item/block.json",
+      "accessCount": 2,
+      "lastAccessed": 1777472551423,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item/index.js",
+      "accessCount": 2,
+      "lastAccessed": 1777474433753,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item-dropdown/index.js",
+      "accessCount": 2,
+      "lastAccessed": 1777474435543,
+      "type": "file"
+    },
+    {
+      "path": "src/plain-menu/index.js",
+      "accessCount": 2,
+      "lastAccessed": 1777474436845,
+      "type": "file"
+    },
+    {
+      "path": "src/plain-menu-item/index.js",
+      "accessCount": 2,
+      "lastAccessed": 1777474438448,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item/style.scss",
+      "accessCount": 2,
+      "lastAccessed": 1777886208908,
+      "type": "file"
+    },
+    {
+      "path": "mild-megamenu.php",
       "accessCount": 1,
-      "lastAccessed": 1777466510543,
+      "lastAccessed": 1777468676935,
+      "type": "file"
+    },
+    {
+      "path": "src/custom-controls/color-palette.js",
+      "accessCount": 1,
+      "lastAccessed": 1777468720376,
+      "type": "file"
+    },
+    {
+      "path": "src/style.scss",
+      "accessCount": 1,
+      "lastAccessed": 1777886208411,
+      "type": "file"
+    },
+    {
+      "path": "src/plain-menu/style.scss",
+      "accessCount": 1,
+      "lastAccessed": 1777886209263,
+      "type": "file"
+    },
+    {
+      "path": "src/plain-menu-item/style.scss",
+      "accessCount": 1,
+      "lastAccessed": 1777886209500,
+      "type": "file"
+    },
+    {
+      "path": "memory/MEMORY.md",
+      "accessCount": 1,
+      "lastAccessed": 1777975901047,
+      "type": "file"
+    },
+    {
+      "path": "memory/project_structure.md",
+      "accessCount": 1,
+      "lastAccessed": 1777975925271,
       "type": "file"
     }
   ],

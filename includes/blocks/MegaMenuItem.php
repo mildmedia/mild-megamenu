@@ -42,7 +42,7 @@ class MegaMenuItem extends AbstractBlock {
 		$text_style = $this->generateTextStyles( $attributes );
 
 		$item_link_classes = array_merge(
-			[ 'megamenu-item__link' ],
+			[ 'menu-item-link' ],
 			[ $font_style['css_classes'] ],
 			[ $text_style['css_classes'] ]
 		);
@@ -53,17 +53,18 @@ class MegaMenuItem extends AbstractBlock {
 			$is_active = $attributes['kind'] == 'post-type' && $attributes['id'] === get_the_ID();
 		}
 
-		$item_classes = array_merge(
-			[ 'wp-block-mild-megamenu-item' ],
-			[ 'megamenu-item' ],
+		$trigger_type = isset( $attributes['triggerType'] ) ? $attributes['triggerType'] : 'hover';
+
+		$item_classes = array_filter( array_merge(
+			[ 'menu-item' ],
 			$content ? [ 'has-children' ] : [],
+			$content && $trigger_type === 'click' ? [ 'has-click-trigger' ] : [],
 			$is_active ? [ 'is-current' ] : [],
-			isset( $attributes['className'] ) ? [ $attributes['className'] ] : []
-		);
+		) );
 
-		$item_classes = apply_filters( 'mild-megamenu/blocks/megamenu-item/item-classes', $item_classes, $attributes );
+		$item_classes = apply_filters( 'mild-megamenu/blocks/menu-item/item-classes', $item_classes, $attributes );
 
-		$html .= '<li class="' . esc_attr( implode( ' ', $item_classes ) ) . '">';
+		$html .= '<li ' . get_block_wrapper_attributes( [ 'class' => implode( ' ', $item_classes ) ] ) . '>';
 		$html .= '<div class="' . esc_attr( implode( ' ', $item_link_classes ) ) . '" style="' . esc_attr( $item_link_style ) . '">';
 		$html .= '<a href="';
 		if ( isset( $attributes['url'] ) ) {
@@ -84,17 +85,16 @@ class MegaMenuItem extends AbstractBlock {
 		$html .= '>' . $attributes['text'] . '</a>';
 
 		if ( trim( $content ) ) {
-			$html .= '<button class="megamenu-item__toggle"><span class="dashicons dashicons-arrow-down"></span></button>';
+			$html .= '<button class="menu-item-toggle"><span class="dashicons dashicons-arrow-down"></span></button>';
 		}
 
 		$html .= '</div>';
 
 		if ( trim( $content ) ) {
-			$html .= '<div class="megamenu-item__dropdown-wrapper">';
-			$html .= '<div class="megamenu-item__dropdown">';
-			$html .= '<div class="megamenu-item__dropdown-content">';
+			$alignment = isset( $attributes['dropdownAlignment'] ) ? $attributes['dropdownAlignment'] : 'center';
+			$html .= '<div class="dropdown-wrapper align-' . esc_attr( $alignment ) . '">';
 			$html .= $content;
-			$html .= '</div></div></div>';
+			$html .= '</div>';
 		}
 
 		$html .= '</li>';

@@ -20,8 +20,9 @@ abstract class AbstractBlock {
 	}
 
 	public function register() {
-		register_block_type(
-			$this->name,
+		$block_folder = substr( $this->name, strlen( 'mild-megamenu/' ) );
+		\register_block_type(
+			\plugin_dir_path( MILD_MEGAMENU_FILE ) . 'build/' . $block_folder,
 			[
 				'style'           => $this->style,
 				'editor_style'    => $this->editor_style,

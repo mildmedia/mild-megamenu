@@ -1,94 +1,83 @@
-.plainmenu-item__dropdown-icon>*,
-.megamenu-item__dropdown-icon>* {
+.plainmenu-item-dropdown-icon>*,
+.menu-item-dropdown-icon>* {
     vertical-align: text-bottom;
 }
 
-.megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout,
-.megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout {
+.megamenu.is-adjusting .menu-item {
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
 
-.megamenu.justify-items-left .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout,
-.megamenu.justify-items-left .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout {
+.megamenu.justify-items-left>.megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout {
     justify-content: flex-start;
 }
 
-.megamenu.justify-items-center .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout,
-.megamenu.justify-items-center .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout {
+.megamenu.justify-items-center>.megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout {
     justify-content: center;
 }
 
-.megamenu.justify-items-right .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout,
-.megamenu.justify-items-right .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout {
+.megamenu.justify-items-right>.megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout {
     justify-content: flex-end;
 }
 
-.megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout>.wp-block,
-.megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout>.wp-block {
+.megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout>.wp-block {
     margin: 0 20px 0 0;
 }
 
-.megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout>.block-list-appender {
+.megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout>.block-list-appender {
     margin-left: 20px;
 }
 
-.megamenu-item__dropdown-wrapper {
-    position: absolute;
-    top: 100%;
-    height: 0;
-    z-index: 10;
-    overflow: hidden;
+.dropdown-wrapper.align-content {
+    right: auto;
+    left: -10px;
+    width: fit-content;
+    min-width: fit-content;
 }
 
-.megamenu-item__dropdown {
+.dropdown {
     width: 100%;
     padding: 10px;
     background: #fff;
 }
 
-.megamenu-item__dropdown-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.megamenu-item__dropdown-content>.block-editor-inner-blocks>.block-editor-block-list__layout>.wp-block {
-    max-width: 100%;
-}
-
-.megamenu-item.is-opened .megamenu-item__dropdown-wrapper {
+.menu-item.is-opened .dropdown-wrapper {
     overflow: visible;
     height: auto;
 }
 
-.plainmenu-item__link a,
-.megamenu-item__link a {
+.plainmenu-item-link a,
+.menu-item-link a {
     display: flex;
     align-items: center;
 }
 
-.plainmenu-item .plainmenu-item__dropdown a {
+.plainmenu-item .plainmenu-item-dropdown a {
     display: flex;
 }
 
-.megamenu.is-orientation-vertical .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout {
+.megamenu.is-orientation-vertical .megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout {
     flex-direction: column;
     align-items: flex-start;
 }
 
-.megamenu.justify-items-left.is-orientation-vertical .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout {
+.megamenu.justify-items-left.is-orientation-vertical .megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout {
     align-items: flex-start;
 }
 
-.megamenu.justify-items-center.is-orientation-vertical .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout {
+.megamenu.justify-items-center.is-orientation-vertical .megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout {
     align-items: center;
 }
 
-.megamenu.justify-items-right.is-orientation-vertical .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout {
+.megamenu.justify-items-right.is-orientation-vertical .megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout {
     align-items: flex-end;
 }
 
-.megamenu.is-orientation-vertical .megamenu__content>.block-editor-inner-blocks>.block-editor-block-list__layout>.wp-block {
+.megamenu.is-orientation-vertical .megamenu-content>.block-editor-inner-blocks>.block-editor-block-list__layout>.wp-block {
     margin: 0;
 }
