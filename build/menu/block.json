@@ -1,0 +1,62 @@
+{
+  "apiVersion": 3,
+  "name": "mild-megamenu/menu",
+  "title": "",
+  "category": "layout",
+  "attributes": {
+    "itemsJustification": {
+      "type": "string"
+    },
+    "expandDropdown": {
+      "type": "boolean",
+      "default": false
+    },
+    "collapseOnMobile": {
+      "type": "boolean",
+      "default": true
+    },
+    "responsiveBreakpoint": {
+      "type": "number",
+      "default": 600
+    },
+    "toggleButtonAlignment": {
+      "type": "string"
+    },
+    "linkPaddingHorizontal": {
+      "type": "number"
+    },
+    "linkPaddingVertical": {
+      "type": "number"
+    }
+  },
+  "supports": {
+    "anchor": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "link": true,
+      "text": true,
+      "background": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "letterSpacing": true,
+      "__experimentalFontStyle": true,
+      "fontStyle": true,
+      "__experimentalFontWeight": true,
+      "fontWeight": true,
+      "__experimentalFontFamily": true,
+      "__experimentalTextDecoration": true,
+      "textDecoration": true,
+      "fontFamily": true,
+      "textTransform": true
+    },
+    "spacing": true,
+    "reusable": false,
+    "customClassName": true,
+    "lightBlockWrapper": false
+  }
+}
