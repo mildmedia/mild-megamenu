@@ -92,7 +92,9 @@ class MegaMenuItem extends AbstractBlock {
 
 		if ( trim( $content ) ) {
 			$alignment = isset( $attributes['dropdownAlignment'] ) ? $attributes['dropdownAlignment'] : 'center';
-			$html .= '<div class="dropdown-wrapper align-' . esc_attr( $alignment ) . '">';
+			$top_offset = isset( $attributes['dropdownTopOffset'] ) ? intval( $attributes['dropdownTopOffset'] ) : 0;
+			$dropdown_style = $top_offset !== 0 ? ' style="margin-top: ' . $top_offset . 'px"' : '';
+			$html .= '<div class="dropdown-wrapper align-' . esc_attr( $alignment ) . '"' . $dropdown_style . '>';
 			$html .= $content;
 			$html .= '</div>';
 		}

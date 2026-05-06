@@ -32,6 +32,10 @@
 		"dropdownAlignment": {
 			"type": "string",
 			"default": "center"
+		},
+		"dropdownTopOffset": {
+			"type": "number",
+			"default": 0
 		}
 	},
 	"supports": {

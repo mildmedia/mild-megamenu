@@ -92,8 +92,8 @@
   "hotPaths": [
     {
       "path": "src/menu-item/edit.js",
-      "accessCount": 33,
-      "lastAccessed": 1777976622572,
+      "accessCount": 37,
+      "lastAccessed": 1777989805370,
       "type": "file"
     },
     {
@@ -109,6 +109,12 @@
       "type": "file"
     },
     {
+      "path": "includes/blocks/MegaMenuItem.php",
+      "accessCount": 15,
+      "lastAccessed": 1777989871200,
+      "type": "file"
+    },
+    {
       "path": "src/style.css",
       "accessCount": 14,
       "lastAccessed": 1777975953163,
@@ -118,12 +124,6 @@
       "path": "src/menu-item-dropdown/edit.js",
       "accessCount": 13,
       "lastAccessed": 1777975511368,
-      "type": "file"
-    },
-    {
-      "path": "includes/blocks/MegaMenuItem.php",
-      "accessCount": 13,
-      "lastAccessed": 1777975531149,
       "type": "file"
     },
     {
@@ -139,9 +139,21 @@
       "type": "file"
     },
     {
+      "path": "src/menu-item/controls.js",
+      "accessCount": 12,
+      "lastAccessed": 1777989866265,
+      "type": "file"
+    },
+    {
       "path": "src/menu-item-dropdown/save.js",
       "accessCount": 11,
       "lastAccessed": 1777975511076,
+      "type": "file"
+    },
+    {
+      "path": "src/menu-item/block.json",
+      "accessCount": 10,
+      "lastAccessed": 1777989789484,
       "type": "file"
     },
     {
@@ -160,18 +172,6 @@
       "path": "src/menu-item-dropdown/block.json",
       "accessCount": 8,
       "lastAccessed": 1777973845416,
-      "type": "file"
-    },
-    {
-      "path": "src/menu-item/controls.js",
-      "accessCount": 8,
-      "lastAccessed": 1777974756095,
-      "type": "file"
-    },
-    {
-      "path": "src/menu-item/block.json",
-      "accessCount": 8,
-      "lastAccessed": 1777974760466,
       "type": "file"
     },
     {

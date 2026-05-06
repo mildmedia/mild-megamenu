@@ -15,6 +15,7 @@ import {
 	ToolbarGroup,
 	Popover,
 	SelectControl,
+	RangeControl,
 } from '@wordpress/components';
 import {
 	BlockControls,
@@ -189,6 +190,13 @@ function Controls(args) {
 								{ label: __('Align to item'), value: 'item' },
 							]}
 							onChange={(dropdownAlignment) => setAttributes({ dropdownAlignment })}
+						/>
+						<RangeControl
+							label={__('Top offset (px)')}
+							value={attributes.dropdownTopOffset || 0}
+							min={-100}
+							max={100}
+							onChange={(dropdownTopOffset) => setAttributes({ dropdownTopOffset })}
 						/>
 					</PanelBody>
 				)}

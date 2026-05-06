@@ -69,13 +69,21 @@ function MenuItemEdit(props) {
 
 			dropdownWrapper.current.style.left = (editorRect.left + paddingLeft - itemRect.left) + 'px';
 			dropdownWrapper.current.style.width = (editorRect.width - paddingLeft - paddingRight) - 20 + 'px';
+
+			if (dropdownAlignment === 'item') {
+				const content = dropdownWrapper.current.querySelector('.dropdown-content');
+				if (content) {
+					const wrapperRect = dropdownWrapper.current.getBoundingClientRect();
+					content.style.marginLeft = (itemRect.left - wrapperRect.left) - 10 + 'px';
+				}
+			}
 		};
 
 		calculate();
 		const observer = new ResizeObserver(calculate);
 		observer.observe(editorEl);
 		return () => observer.disconnect();
-	}, [parentAttributes?.expandDropdown, showDropdown]);
+	}, [parentAttributes?.expandDropdown, showDropdown, dropdownAlignment]);
 
 	const itemClasses = clsx(
 		'wp-block-mild-megamenu-item',
@@ -123,7 +131,7 @@ function MenuItemEdit(props) {
 					</a>
 				</div>
 				{showDropdown && (
-					<div ref={dropdownWrapper} className={`dropdown-wrapper align-${dropdownAlignment || 'center'}`}>
+					<div ref={dropdownWrapper} className={`dropdown-wrapper align-${dropdownAlignment || 'center'}`} style={attributes.dropdownTopOffset ? { marginTop: `${attributes.dropdownTopOffset}px` } : undefined}>
 						<InnerBlocks
 							allowedBlocks={['mild-megamenu/menu-item-dropdown']}
 							renderAppender={false}
