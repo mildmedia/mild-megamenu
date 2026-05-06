@@ -14,6 +14,7 @@ Built with Claude AI.
 * Removed unnecessary controls for width (better to use Gutenberg built-in methods for this).
 * Improved handling of nested menu items and dropdowns.
 * Allow alignment of dropdown content to left, right, center or aligned with the parent menu-item.
+* Allow positioning of dropdown content with a top offset control.
 
 It allows you to build simple and advanced navigation menus the WordPress way with blocks.
 With this [WordPress Mega Menu block](https://wordpress.org/plugins/mild-megamenu/), you'll be able to build and customize menus seamlessly using dedicated WP navigation blocks.
