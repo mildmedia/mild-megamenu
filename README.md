@@ -36,8 +36,6 @@ For advanced nav menus, use the mega menu item block. Its flexibility will let y
 A quick guide to working with the WordPress Mega Menu plugin:
 
 * The mega menu block can host mega menu items with nested drop-downs, i.e. they can contain any Gutenberg blocks.
-* Plain menu blocks can contain plain menu items with drop-downs containing other plain menu items.
+* ~~Plain menu blocks can contain plain menu items with drop-downs containing other plain menu items~~. Support for this has been revoked due to the fact such menus are bad UX and can be easily achieved with the mega menu block if really needed.
 * You can change the width, color, font size, layouts (horizontal/vertical) of some mega menu blocks.
 * Optionally turn on the "hamburger button" for your WordPress mega menu on mobile devices for easier navigation.
-
-Love working in Gutenberg? Download [Vd WordPress blocks](https://wordpress.org/plugins/vd/) - the biggest library of free blocks and templates for the block editor.
