@@ -4,7 +4,7 @@
  * Plugin Name: Mega Menu Blocks
  * Plugin URI: https://github.com/mildmedia/mild-megamenu/tree/master
  * Description: Build better navigation menus with the WordPress mega menu blocks.
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: Mild + John Doe
  * Author URI: https://github.com/mildmedia/
  * License: GPLv2 or later
@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 if(strstr($_SERVER['HTTP_HOST'], 'lndo.site')) {
 	define('MILD_MEGAMENU_VERSION', time());
 } else {
-	define( 'MILD_MEGAMENU_VERSION', '1.1.2' );
+	define( 'MILD_MEGAMENU_VERSION', '1.1.3' );
 }
 define( 'MILD_MEGAMENU_FILE', __FILE__ );
 

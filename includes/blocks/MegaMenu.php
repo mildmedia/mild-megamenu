@@ -8,7 +8,7 @@ class MegaMenu extends AbstractBlock {
 		parent::__construct();
 	}
 
-	public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content, $block = null ) {
 
 		$collapse_on_mobile = ! isset( $attributes['collapseOnMobile'] ) || $attributes['collapseOnMobile'];
 
@@ -17,6 +17,7 @@ class MegaMenu extends AbstractBlock {
 			isset( $attributes['align'] ) ? [ 'align' . $attributes['align'] ] : [],
 			isset( $attributes['itemsJustification'] ) ? [ 'justify-items-' . $attributes['itemsJustification'] ] : [],
 			isset( $attributes['expandDropdown'] ) && $attributes['expandDropdown'] ? [ 'has-full-width-dropdown' ] : [],
+			isset( $attributes['orientation'] ) && $attributes['orientation'] === 'vertical' ? [ 'is-orientation-vertical' ] : [],
 			$collapse_on_mobile ? [ 'is-collapsible' ] : []
 		) );
 
@@ -56,7 +57,10 @@ class MegaMenu extends AbstractBlock {
 		}
 
 		$html .= '<div class="megamenu-content-wrapper">';
-		$html .= '<ul class="megamenu-content">';
+		$gap           = isset( $attributes['style']['spacing']['blockGap'] ) ? $attributes['style']['spacing']['blockGap'] : null;
+		$gap           = $gap ? preg_replace( '/^var:preset\|spacing\|(.+)$/', 'var(--wp--preset--spacing--$1)', $gap ) : null;
+		$content_style = $gap ? ' style="gap: ' . esc_attr( $gap ) . '"' : '';
+		$html .= '<ul class="megamenu-content"' . $content_style . '>';
 		$html .= $content;
 		$html .= '</ul></div></nav></div>';
 

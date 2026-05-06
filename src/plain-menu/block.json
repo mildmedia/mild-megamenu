@@ -9,24 +9,43 @@
         },
         "orientation": {
             "type": "string",
-            "default": "horizontal"
+            "default": "vertical"
         },
-        "menuItemFontSize": {
-            "type": "string"
+        "linkPaddingHorizontal": {
+            "type": "number"
         },
-        "customMenuItemFontSize": {
-            "type": "string"
-        },
-        "menuItemColor": {
-            "type": "string"
-        },
-        "customMenuItemColor": {
-            "type": "string"
+        "linkPaddingVertical": {
+            "type": "number"
         }
     },
     "supports": {
         "anchor": false,
-        "align": false,
+        "align": [
+            "wide",
+            "full"
+        ],
+        "color": {
+            "link": true,
+            "text": true,
+            "background": true
+        },
+        "typography": {
+            "fontSize": true,
+            "lineHeight": true,
+            "letterSpacing": true,
+            "__experimentalFontStyle": true,
+            "fontStyle": true,
+            "__experimentalFontWeight": true,
+            "fontWeight": true,
+            "__experimentalFontFamily": true,
+            "__experimentalTextDecoration": true,
+            "textDecoration": true
+        },
+        "spacing": {
+            "margin": true,
+            "padding": true,
+            "blockGap": true
+        },
         "reusable": false,
         "customClassName": true,
         "lightBlockWrapper": false

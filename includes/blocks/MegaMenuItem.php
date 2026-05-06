@@ -10,7 +10,7 @@ class MegaMenuItem extends AbstractBlock {
 		parent::__construct();
 	}
 
-	public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content, $block = null ) {
 		$html = '';
 
 		if ( empty( $attributes['text'] ) ) {
@@ -84,7 +84,8 @@ class MegaMenuItem extends AbstractBlock {
 
 		$html .= '>' . $attributes['text'] . '</a>';
 
-		if ( trim( $content ) ) {
+		$show_arrow = isset( $block->context['mild-megamenu/showDropdownArrow'] ) ? $block->context['mild-megamenu/showDropdownArrow'] : true;
+		if ( trim( $content ) && $show_arrow ) {
 			$html .= '<button class="menu-item-toggle"><span class="dashicons dashicons-arrow-down"></span></button>';
 		}
 

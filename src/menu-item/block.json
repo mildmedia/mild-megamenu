@@ -38,6 +38,7 @@
 			"default": 0
 		}
 	},
+	"usesContext": ["mild-megamenu/showDropdownArrow"],
 	"supports": {
 		"anchor": false,
 		"align": false,

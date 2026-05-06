@@ -10,22 +10,10 @@
     position: static;
 }
 
-
-.megamenu-dropdown-wrapper {
-    position: absolute;
-    left: 0;
-    top: 100%;
-    width: 100%;
-    height: 0;
-}
-
-.megamenu.has-full-width-dropdown .megamenu-dropdown-wrapper {
-    right: 0;
-}
-
 .megamenu-content {
     display: flex;
     flex-wrap: wrap;
+    gap: inherit;
     align-items: center;
     list-style: none;
     margin: 0;
@@ -61,7 +49,6 @@
         display: none;
     }
 }
-
 
 .megamenu-toggle-wrapper {
     &.is-hidden {
@@ -109,18 +96,7 @@
     align-items: flex-start;
 }
 
-.megamenu.is-orientation-vertical .plainmenu-item-dropdown {
-    left: 100%;
-    top: 0;
-
-    &.toleft {
-        right: 100%;
-        left: auto;
-    }
-}
-
 /* --- Dropdown alignment --- */
-
 
 .dropdown-wrapper.align-left .dropdown,
 .dropdown-wrapper.align-item .dropdown {
@@ -240,7 +216,6 @@
 }
 
 .dropdown-content {
-
     >* {
         max-width: 100%;
 
@@ -302,6 +277,75 @@
 
 
 /* =============================================================================
+   Plain Menu
+   ============================================================================= */
+
+.plainmenu {
+    position: relative;
+}
+
+.plainmenu__content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    >li {
+        margin: 0;
+
+        &::before,
+        &::after {
+            display: none;
+        }
+    }
+}
+
+.plainmenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        margin: 0;
+        padding: 0;
+
+        &::before,
+        &::after {
+            display: none;
+        }
+    }
+
+    &::before,
+    &::after {
+        display: none;
+    }
+}
+
+/* --- Justify items --- */
+
+.plainmenu.justify-items-left .plainmenu__content {
+    justify-content: flex-start;
+}
+
+.plainmenu.justify-items-center .plainmenu__content {
+    justify-content: center;
+}
+
+.plainmenu.justify-items-right .plainmenu__content {
+    justify-content: flex-end;
+}
+
+/* --- Vertical orientation --- */
+
+.plainmenu.is-orientation-vertical .plainmenu__content {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+/* =============================================================================
    Plain Menu Item
    ============================================================================= */
 
@@ -309,87 +353,15 @@
     position: relative;
 }
 
-.plainmenu-item.is-opened>.plainmenu-item-dropdown,
-.plainmenu-item.has-child-selected>.plainmenu-item-dropdown,
-.plainmenu-item:hover>.plainmenu-item-dropdown {
-    visibility: visible;
-    z-index: 10;
-}
-
-.plainmenu-item-dropdown .plainmenu-item:first-child>.plainmenu-item-link>a {
-    padding-top: 0.5em;
-}
-
-.plainmenu-item-dropdown .plainmenu-item:last-child>.plainmenu-item-link>a {
-    padding-bottom: 0.5em;
-}
-
-.plainmenu-item-link {
+.plainmenu-item__link {
     display: flex;
-}
 
-.plainmenu-item a {
-    display: block;
-    font-style: inherit;
-}
-
-.plainmenu-item.has-children>.plainmenu-item-link a {
-    padding-right: 5px;
-}
-
-.plainmenu-item .has-text-color>a {
-    color: inherit;
-}
-
-.plainmenu-item-dropdown {
-    z-index: -1;
-    visibility: hidden;
-    width: 200px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-
-    &.toleft {
-        left: auto;
-        right: 0;
+    a {
+        display: block;
+        text-decoration: inherit;
     }
 
-    .plainmenu-item-dropdown {
-        left: 100%;
-        top: 0;
-
-        &.toleft {
-            right: 100%;
-            left: auto;
-        }
-    }
-}
-
-.plainmenu-item .plainmenu-item-toggle {
-    display: inline-block;
-    padding: 0;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    color: inherit;
-    margin: 0;
-    outline: none;
-
-    &::before,
-    &::after {
-        display: none;
-    }
-
-    &:active,
-    &:focus {
-        outline: none;
-        text-decoration: none;
-    }
-
-    &:hover {
-        text-decoration: none;
+    &.has-text-color a {
         color: inherit;
-        background: inherit;
-        box-shadow: none;
     }
 }

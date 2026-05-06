@@ -32,7 +32,7 @@ abstract class AbstractBlock {
 		);
 	}
 
-	public function render_callback($attributes, $content) {
+	public function render_callback( $attributes, $content, $block = null ) {
 		return $content;
 	}
 

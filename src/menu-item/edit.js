@@ -58,31 +58,32 @@ function MenuItemEdit(props) {
 		if (!editorEl) return;
 
 		const calculate = () => {
-
-			// find first is-layout-constrained ancestor and it's child to get the correct width and left offset for the dropdown
-			const rootGroupEl = editorEl.querySelector(`.is-layout-constrained`)?.firstElementChild;
+			const rootGroupEl = editorEl.querySelector('.is-layout-constrained')?.firstElementChild;
 			const editorRect = rootGroupEl ? rootGroupEl.getBoundingClientRect() : editorEl.getBoundingClientRect();
-			const itemRect = menuItem.current.getBoundingClientRect();
 			const editorStyles = window.getComputedStyle(editorEl);
 			const paddingLeft = parseFloat(editorStyles.paddingLeft) || 0;
 			const paddingRight = parseFloat(editorStyles.paddingRight) || 0;
 
-			dropdownWrapper.current.style.left = (editorRect.left + paddingLeft - itemRect.left) + 'px';
+			const containingBlock = dropdownWrapper.current.offsetParent;
+			const cbLeft = containingBlock ? containingBlock.getBoundingClientRect().left : 0;
+
+			dropdownWrapper.current.style.left = (editorRect.left + paddingLeft - cbLeft) + 'px';
 			dropdownWrapper.current.style.width = (editorRect.width - paddingLeft - paddingRight) - 20 + 'px';
 
 			if (dropdownAlignment === 'item') {
 				const content = dropdownWrapper.current.querySelector('.dropdown-content');
 				if (content) {
+					const itemRect = menuItem.current.getBoundingClientRect();
 					const wrapperRect = dropdownWrapper.current.getBoundingClientRect();
 					content.style.marginLeft = (itemRect.left - wrapperRect.left) - 10 + 'px';
 				}
 			}
 		};
 
-		calculate();
+		const rafId = requestAnimationFrame(calculate);
 		const observer = new ResizeObserver(calculate);
 		observer.observe(editorEl);
-		return () => observer.disconnect();
+		return () => { cancelAnimationFrame(rafId); observer.disconnect(); };
 	}, [parentAttributes?.expandDropdown, showDropdown, dropdownAlignment]);
 
 	const itemClasses = clsx(
@@ -123,7 +124,7 @@ function MenuItemEdit(props) {
 							onReplace={onReplace}
 							onMerge={mergeBlocks}
 							identifier="text" />
-						{hasDescendants && (
+						{hasDescendants && parentAttributes?.showDropdownArrow !== false && (
 							<span className="menu-item-dropdown-icon">
 								<span className="dashicons dashicons-arrow-down"></span>
 							</span>

@@ -41,6 +41,7 @@ function MegaMenu(args) {
 		{
 			[`justify-items-${attributes.itemsJustification}`]: attributes.itemsJustification,
 			[`has-full-width-dropdown`]: attributes.expandDropdown,
+			[`is-orientation-vertical`]: attributes.orientation === 'vertical',
 			'is-adjusting': isAdjusting,
 		}
 	);
@@ -60,7 +61,7 @@ function MegaMenu(args) {
 			{linkPaddingCSS && <style>{linkPaddingCSS}</style>}
 			<div {...blockProps}>
 				<div className="megamenu-wrapper">
-					<div className="megamenu-content">
+					<div className="megamenu-content" style={attributes?.style?.spacing?.blockGap ? { gap: attributes.style.spacing.blockGap.replace(/^var:preset\|spacing\|(.+)$/, 'var(--wp--preset--spacing--$1)') } : undefined}>
 						<InnerBlocks
 							ref={ref}
 							template={TEMPLATE}

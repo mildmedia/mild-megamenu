@@ -9,7 +9,8 @@ import Controls from './controls';
  */
 import { useRef } from '@wordpress/element';
 import {
-	InnerBlocks
+	InnerBlocks,
+	useBlockProps,
 } from '@wordpress/block-editor';
 import { withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
@@ -32,19 +33,20 @@ function PlainMenu(args) {
 	const ref = useRef();
 
 	const menuClasses = clsx(
-		'wp-block-mild-plain-menu',
-		'megamenu',
+		'plainmenu',
 		{
 			[`justify-items-${attributes.itemsJustification}`]: attributes.itemsJustification,
 			[`is-orientation-${attributes.orientation}`]: attributes.orientation
 		}
 	);
 
+	const blockProps = useBlockProps({ className: menuClasses });
+
 	return (
 		<>
 			<Controls {...args} />
-			<div className={menuClasses}>
-				<div className="megamenu__content">
+			<div {...blockProps}>
+				<div className="plainmenu__content" style={attributes?.style?.spacing?.blockGap ? { gap: attributes.style.spacing.blockGap.replace(/^var:preset\|spacing\|(.+)$/, 'var(--wp--preset--spacing--$1)') } : undefined}>
 					<InnerBlocks
 						ref={ref}
 						template={TEMPLATE}

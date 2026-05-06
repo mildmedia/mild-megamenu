@@ -60,6 +60,6 @@ class BlockRegister {
 	}
 
 	public function enqueue_frontend_assets() {
-		wp_enqueue_script( 'mild-megamenu-block-frontend', plugins_url( 'build/frontend.js', MILD_MEGAMENU_FILE ), [ 'jquery' ], time(), true );
+		wp_enqueue_script( 'mild-megamenu-block-frontend', plugins_url( 'build/frontend.js', MILD_MEGAMENU_FILE ), [ 'jquery' ], MILD_MEGAMENU_VERSION, true );
 	}
 }

@@ -1,4 +1,6 @@
 import { __ } from '@wordpress/i18n';
+import { useDispatch } from '@wordpress/data';
+import { createBlock } from '@wordpress/blocks';
 import {
 	BlockControls,
 	InspectorControls
@@ -10,73 +12,50 @@ import {
 	PanelBody,
 	RangeControl,
 	ToggleControl,
-	ToolbarDropdownMenu,
 	ToolbarButton,
-	ToolbarGroup
+	ToolbarGroup,
 } from '@wordpress/components';
+import LinkPaddingControl from '../shared/LinkPaddingControl';
+import PageSearchPanel from '../shared/PageSearchPanel';
+import OrientationJustifyControls from '../shared/OrientationJustifyControls';
 
 function Controls(args) {
 	const {
+		clientId,
 		setAttributes,
 		attributes,
-		updateChildBlocksAttributes,
 		setIsAdjusting,
 	} = args;
 
-	function setAlignment(alignment) {
-		return () => {
-			const itemsJustification =
-				attributes.itemsJustification === alignment ? undefined : alignment;
-			setAttributes({
-				itemsJustification,
-			});
-		}
-	}
-
-	function setLinkPadding(value, dimension) {
-		const numValue = value !== undefined && value !== '' ? Number(value) : undefined;
-		const attributeName = dimension === 'horizontal' ? 'linkPaddingHorizontal' : 'linkPaddingVertical';
-		setAttributes({ [attributeName]: numValue });
-	}
+	const { insertBlock } = useDispatch('core/block-editor');
 
 	function expandDropdown() {
-		setAttributes({
-			expandDropdown: !attributes.expandDropdown,
-		});
+		setAttributes({ expandDropdown: !attributes.expandDropdown });
+	}
+
+	function addPage(page) {
+		insertBlock(
+			createBlock('mild-megamenu/menu-item', {
+				url: page.link,
+				text: page.title.rendered,
+			}),
+			undefined,
+			clientId,
+			false
+		);
 	}
 
 	return (
 		<>
 			<BlockControls>
-				<ToolbarDropdownMenu
-					icon={attributes.itemsJustification ? `editor-align${attributes.itemsJustification}` : "editor-alignleft"}
-					label={__('Change items justification')}
-					controls={[
-						{
-							icon: "editor-alignleft",
-							title: __('Justify items left'),
-							isActive: 'left' === attributes.itemsJustification,
-							onClick: setAlignment('left'),
-						},
-						{
-							icon: "editor-aligncenter",
-							title: __('Justify items center'),
-							isActive:
-								'center' === attributes.itemsJustification,
-							onClick: setAlignment('center'),
-						},
-						{
-							icon: "editor-alignright",
-							title: __('Justify items right'),
-							isActive: 'right' === attributes.itemsJustification,
-							onClick: setAlignment('right'),
-						},
-					]}
+				<OrientationJustifyControls
+					attributes={attributes}
+					setAttributes={setAttributes}
 				/>
 				<ToolbarGroup>
 					<ToolbarButton
 						name="expand"
-						icon={attributes.expandDropdown ? "editor-contract" : "editor-expand"}
+						icon={attributes.expandDropdown ? 'editor-contract' : 'editor-expand'}
 						title={__('Expand dropdown')}
 						onClick={expandDropdown}
 					/>
@@ -90,23 +69,15 @@ function Controls(args) {
 						checked={attributes.expandDropdown}
 						onChange={expandDropdown}
 					/>
-					<RangeControl
-						label={__('Link padding x')}
-						value={attributes.linkPaddingHorizontal ?? 0}
-						onChange={(value) => setLinkPadding(value, 'horizontal')}
-						onFocus={() => setIsAdjusting(true)}
-						onBlur={() => setIsAdjusting(false)}
-						min={0}
-						max={50}
+					<ToggleControl
+						label={__('Show dropdown arrow')}
+						checked={attributes.showDropdownArrow !== false}
+						onChange={(value) => setAttributes({ showDropdownArrow: value })}
 					/>
-					<RangeControl
-						label={__('Link padding y')}
-						value={attributes.linkPaddingVertical ?? 0}
-						onChange={(value) => setLinkPadding(value, 'vertical')}
-						onFocus={() => setIsAdjusting(true)}
-						onBlur={() => setIsAdjusting(false)}
-						min={0}
-						max={50}
+					<LinkPaddingControl
+						attributes={attributes}
+						setAttributes={setAttributes}
+						setIsAdjusting={setIsAdjusting}
 					/>
 				</PanelBody>
 				<PanelBody title={__('Responsive Settings')} initialOpen={false}>
@@ -123,33 +94,33 @@ function Controls(args) {
 						checked={attributes.collapseOnMobile}
 						onChange={(collapseOnMobile) => setAttributes({ collapseOnMobile })}
 					/>
-					<BaseControl
-						label={__('Toggle button alignment')}
-					>
+					<BaseControl label={__('Toggle button alignment')}>
 						<ButtonGroup>
 							<Button
 								icon="editor-alignleft"
 								isSecondary
-								onClick={() => { setAttributes({ toggleButtonAlignment: 'left' }) }}
+								onClick={() => setAttributes({ toggleButtonAlignment: 'left' })}
 								isPrimary={'left' === attributes.toggleButtonAlignment}
 							/>
 							<Button
 								icon="editor-aligncenter"
 								isSecondary
-								onClick={() => { setAttributes({ toggleButtonAlignment: 'center' }) }}
+								onClick={() => setAttributes({ toggleButtonAlignment: 'center' })}
 								isPrimary={'center' === attributes.toggleButtonAlignment}
 							/>
 							<Button
 								icon="editor-alignright"
 								isSecondary
-								onClick={() => { setAttributes({ toggleButtonAlignment: 'right' }) }}
+								onClick={() => setAttributes({ toggleButtonAlignment: 'right' })}
 								isPrimary={'right' === attributes.toggleButtonAlignment}
 							/>
 						</ButtonGroup>
 					</BaseControl>
 				</PanelBody>
+				<PanelBody title={__('Add pages')} initialOpen={false}>
+					<PageSearchPanel onAdd={addPage} />
+				</PanelBody>
 			</InspectorControls>
-
 		</>
 	)
 }

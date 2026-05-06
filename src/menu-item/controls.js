@@ -195,7 +195,7 @@ function Controls(args) {
 							label={__('Top offset (px)')}
 							value={attributes.dropdownTopOffset || 0}
 							min={-100}
-							max={100}
+							max={250}
 							onChange={(dropdownTopOffset) => setAttributes({ dropdownTopOffset })}
 						/>
 					</PanelBody>

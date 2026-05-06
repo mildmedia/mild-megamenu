@@ -5,16 +5,21 @@
 This plugin is a fork of [VD-Megamenu](https://github.com/vegetable-bits/vd-megamenu) which in it's own is a fork of [Getwid WordPress Mega Menu block](https://github.com/motopress/getwid-megamenu) with some adjustments and better style supports.
 Built with Claude AI.
 
-== List of improvements ==
+### List of improvements
 
-* Better support for Wordpress default styles.
 * New sub-block for the dropdown.
+* SCSS removed in favor of modern CSS for better compatibility with WordPress default styles.
+* Better support for Wordpress default styles.
+* Allow horizontal and vertical layouts for the mega menu and plain menu.
+* Allow for default wp gap style support for spacing between menu items.
 * Allow dropdowns to open on click or hover.
 * Item padding controls for menu-items from menu main controls.
 * Removed unnecessary controls for width (better to use Gutenberg built-in methods for this).
 * Improved handling of nested menu items and dropdowns.
 * Allow alignment of dropdown content to left, right, center or aligned with the parent menu-item.
 * Allow positioning of dropdown content with a top offset control.
+* Allow dropdown arrow to be turned on or off.
+
 
 It allows you to build simple and advanced navigation menus the WordPress way with blocks.
 With this [WordPress Mega Menu block](https://wordpress.org/plugins/mild-megamenu/), you'll be able to build and customize menus seamlessly using dedicated WP navigation blocks.

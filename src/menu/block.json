@@ -27,7 +27,18 @@
         },
         "linkPaddingVertical": {
             "type": "number"
+        },
+        "orientation": {
+            "type": "string",
+            "default": "horizontal"
+        },
+        "showDropdownArrow": {
+            "type": "boolean",
+            "default": true
         }
+    },
+    "providesContext": {
+        "mild-megamenu/showDropdownArrow": "showDropdownArrow"
     },
     "supports": {
         "anchor": false,
@@ -54,7 +65,11 @@
             "fontFamily": true,
             "textTransform": true
         },
-        "spacing": true,
+        "spacing": {
+            "margin": true,
+            "padding": true,
+            "blockGap": true
+        },
         "reusable": false,
         "customClassName": true,
         "lightBlockWrapper": false

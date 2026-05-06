@@ -43,14 +43,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.addEventListener('click', function (event) {
             const target = event.target;
-            console.log('click document', target);
             if (target.closest('.menu-item.has-click-trigger')) {
+                if (target.closest('.dropdown-wrapper')) {
+                    return;
+                }
                 event.preventDefault();
-                console.log('click trigger open submenu?');
                 const menuItem = target.closest('.menu-item');
+                document.querySelectorAll('.menu-item.has-click-trigger.is-opened').forEach(item => {
+                    if (!item.contains(menuItem)) {
+                        item.classList.remove('is-opened');
+                    }
+                });
                 menuItem.classList.toggle('is-opened');
                 return;
             }
+
+            document.querySelectorAll('.menu-item.has-click-trigger.is-opened').forEach(item => {
+                item.classList.remove('is-opened');
+            });
 
             if (target.classList.contains('megamenu-toggle')) {
                 toggleMobileMenu(target, menu);

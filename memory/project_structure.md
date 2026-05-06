@@ -66,13 +66,21 @@ mild-megamenu/plain-menu
 **Called on load:** `showMenuToggleButton`, `attachToggleActionToButtons`, `setDropdownAlignment`
 **Called on resize:** `showMenuToggleButton`, `setDropdownAlignment`
 
-## Known issue / in progress
+## Shared components
 
-The old `setDropdownsPosition` function (which set `left: -menuCoords.left` + `width: window.innerWidth` on the dropdown wrapper for `has-full-width-dropdown`) was replaced with `setDropdownAlignment` (which only sets `marginLeft` on content). This lost the explicit wrapper sizing.
+- `src/shared/LinkPaddingControl.js` — RangeControl x/y padding, used by menu + plain-menu controls
+- `src/shared/PageSearchPanel.js` — debounced apiFetch page search, `onAdd(page)` callback
 
-**Plan:** Restore wrapper positioning logic — set negative `left` on `.dropdown-wrapper` and `width: window.innerWidth` for `has-full-width-dropdown`. For Gutenberg editor: use ResizeObserver in `edit.js` to measure editor canvas width and apply it to the dropdown wrapper.
+## Dropdown positioning (editor)
 
-CSS change also needed: `.dropdown-wrapper` `right: 0` → `width: 100%` to avoid conflict when JS overrides `left`.
+`menu-item/edit.js` uses `ResizeObserver` on `.is-root-container` to directly set `left` + `width` on `.dropdown-wrapper` ref (no setState = no re-renders). Also sets `marginLeft` on `.dropdown-content` for `align-item`. Uses `rootGroupEl = editorEl.querySelector('.is-layout-constrained')?.firstElementChild` for correct width reference.
+
+## Block supports
+
+Both `menu` and `plain-menu` use PHP render_callback. Supports (color, typography, spacing) are applied via:
+- `edit.js`: `useBlockProps({ className: ... })` 
+- PHP: `get_block_wrapper_attributes($wrapper_attrs)`
+- `save.js`: just `<InnerBlocks.Content />` — NO `useBlockProps.save()` needed for SSR blocks
 
 ## Source files
 

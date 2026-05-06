@@ -10,7 +10,7 @@ class PlainMenuItem extends AbstractBlock {
 		parent::__construct();
 	}
 
-	public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content, $block = null ) {
 		$html = '';
 
 		if ( empty( $attributes['text'] ) ) {
@@ -45,7 +45,6 @@ class PlainMenuItem extends AbstractBlock {
 		$item_classes = array_merge(
 			[ 'wp-block-mild-plain-menu-item' ],
 			[ 'plainmenu-item' ],
-			trim( $content ) ? [ 'has-children' ] : [],
 			$is_active ? [ 'is-current' ] : [],
 			isset( $attributes['className'] ) ? [ $attributes['className'] ] : []
 		);
@@ -82,20 +81,7 @@ class PlainMenuItem extends AbstractBlock {
 		}
 
 		$html .= '>' . $attributes['text'] . '</a>';
-
-		if ( trim( $content ) ) {
-			$html .= '<button class="plainmenu-item__toggle"><span class="dashicons dashicons-arrow-down"></span></button>';
-		}
-
 		$html .= '</div>';
-
-		if ( trim( $content ) ) {
-			$html .= '<div class="plainmenu-item__dropdown">';
-			$html .= '<ul class="plainmenu-item__dropdown-content">';
-			$html .= $content;
-			$html .= '</ul></div>';
-		}
-
 		$html .= '</li>';
 
 		return $html;
@@ -111,10 +97,8 @@ class PlainMenuItem extends AbstractBlock {
 		$has_custom_font_size = array_key_exists( 'customFontSize', $attributes );
 
 		if ( $has_named_font_size ) {
-			// Add the font size class.
 			$font_sizes['css_classes'] = sprintf( 'has-%s-font-size', $attributes['fontSize'] );
 		} elseif ( $has_custom_font_size ) {
-			// Add the custom font size inline style.
 			$font_size = is_numeric( $attributes['customFontSize'] ) ? $attributes['customFontSize'] . 'px' : $attributes['customFontSize'];
 			$font_sizes['inline_styles'] = sprintf( 'font-size: %s;', $font_size );
 		}
@@ -128,21 +112,16 @@ class PlainMenuItem extends AbstractBlock {
 			'inline_styles' => '',
 		);
 
-		// Text color.
 		$has_named_text_color  = array_key_exists( 'textColor', $attributes );
 		$has_custom_text_color = array_key_exists( 'customTextColor', $attributes );
 
-		// If has text color.
 		if ( $has_custom_text_color || $has_named_text_color ) {
-			// Add has-text-color class.
 			$colors['css_classes'] .= ' has-text-color';
 		}
 
 		if ( $has_named_text_color ) {
-			// Add the color class.
 			$colors['css_classes'] .= sprintf( ' has-%s-color', $attributes['textColor'] );
 		} elseif ( $has_custom_text_color ) {
-			// Add the custom color inline style.
 			$colors['inline_styles'] .= sprintf( 'color: %s;', $attributes['customTextColor'] );
 		}
 
