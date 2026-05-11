@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const menus = document.querySelectorAll('.megamenu');
     const plainMenus = document.querySelectorAll('.megamenu');
+    const menuToggles = document.querySelectorAll('.megamenu-toggle');
 
     function setDropdownAlignment(menus) {
         menus.forEach(menu => {
@@ -42,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function attachToggleActionToButtons(menus) {
 
         document.addEventListener('click', function (event) {
+
             const target = event.target;
             if (target.closest('.menu-item.has-click-trigger')) {
                 if (target.closest('.dropdown-wrapper')) {
@@ -49,12 +51,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 event.preventDefault();
                 const menuItem = target.closest('.menu-item');
-                document.querySelectorAll('.menu-item.has-click-trigger.is-opened').forEach(item => {
+                const megaMenu = menuItem.closest('.megamenu');
+                const openMenus = document.querySelectorAll('.menu-item.has-click-trigger.is-opened');
+                console.log('closing other dropdowns');
+                openMenus.forEach(item => {
+                    // close all but this menu-item
                     if (!item.contains(menuItem)) {
                         item.classList.remove('is-opened');
                     }
                 });
-                menuItem.classList.toggle('is-opened');
+                if (openMenus.length > 0 && megaMenu.getAttribute('data-delay-dropdowns')) {
+                    const delay = parseFloat(megaMenu.getAttribute('data-delay-dropdowns')) * 1000;
+                    setTimeout(() => {
+                        menuItem.classList.toggle('is-opened');
+                    }, delay);
+                } else {
+                    menuItem.classList.toggle('is-opened');
+                }
                 return;
             }
 
@@ -62,9 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 item.classList.remove('is-opened');
             });
 
-            if (target.classList.contains('megamenu-toggle')) {
-                toggleMobileMenu(target, menu);
-            }
             if (target.classList.contains('menu-item-toggle')) {
                 console.log('toggle-mobile-menu');
                 const menuItem = target.closest('.menu-item');
@@ -77,6 +87,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    menuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function (event) {
+            event.preventDefault();
+            const menu = toggle.closest('.megamenu');
+            toggleMobileMenu(toggle, menu);
+        });
+    });
 
     function toggleMobileMenu(toggle_button, menu) {
         toggle_button.classList.toggle('is-opened');

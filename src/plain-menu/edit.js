@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import clsx from 'clsx';
 import Controls from './controls';
 
 /**
@@ -32,13 +31,11 @@ function PlainMenu(args) {
 
 	const ref = useRef();
 
-	const menuClasses = clsx(
+	const menuClasses = [
 		'plainmenu',
-		{
-			[`justify-items-${attributes.itemsJustification}`]: attributes.itemsJustification,
-			[`is-orientation-${attributes.orientation}`]: attributes.orientation
-		}
-	);
+		attributes.itemsJustification && `justify-items-${attributes.itemsJustification}`,
+		attributes.orientation && `is-orientation-${attributes.orientation}`,
+	].filter(Boolean).join(' ');
 
 	const blockProps = useBlockProps({ className: menuClasses });
 

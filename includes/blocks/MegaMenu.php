@@ -26,6 +26,10 @@ class MegaMenu extends AbstractBlock {
 
 		$wrapper_attrs['data-responsive-breakpoint'] = isset( $attributes['responsiveBreakpoint'] ) ? absint( $attributes['responsiveBreakpoint'] ) : 782;
 
+		if(isset( $attributes['delayBetweenDropdowns'] ) && $attributes['delayBetweenDropdowns'] !== 0) {
+			$wrapper_attrs['data-delay-dropdowns'] = $attributes['delayBetweenDropdowns'];
+		}
+
 		$block_id = wp_unique_id( 'megamenu-' );
 		$wrapper_attrs['id'] = $block_id;
 
@@ -48,7 +52,7 @@ class MegaMenu extends AbstractBlock {
 		if ( $collapse_on_mobile ) {
 			$toggle_button_alignment_style = isset( $attributes['toggleButtonAlignment'] ) ? 'style="text-align: ' . esc_attr( $attributes['toggleButtonAlignment'] ) . ';"' : '';
 
-			$button = '<button class="megamenu-toggle"><span class="dashicons dashicons-menu"></span>' . esc_html__( 'Menu', 'mild-megamenu' ) . '</button>';
+			$button = '<button class="megamenu-toggle"><span class="dashicons dashicons-menu"></span></button>';
 			$button = apply_filters( 'mild-megamenu/blocks/megamenu/mobile-toggle-button', $button, $extra_classes );
 
 			$html .= '<div class="megamenu-toggle-wrapper is-hidden" ' . $toggle_button_alignment_style . '>';

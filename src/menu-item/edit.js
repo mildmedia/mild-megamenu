@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import clsx from 'clsx';
 import Controls from "./controls";
 
 /**
@@ -86,25 +85,21 @@ function MenuItemEdit(props) {
 		return () => { cancelAnimationFrame(rafId); observer.disconnect(); };
 	}, [parentAttributes?.expandDropdown, showDropdown, dropdownAlignment]);
 
-	const itemClasses = clsx(
+	const itemClasses = [
 		'wp-block-mild-megamenu-item',
 		'menu-item',
-		{
-			'has-child': hasDescendants,
-			'is-opened': showDropdown
-		}
-	);
+		hasDescendants && 'has-child',
+		showDropdown && 'is-opened',
+	].filter(Boolean).join(' ');
 
 	const blockProps = useBlockProps({ className: itemClasses, ref: menuItem });
 
-	const itemLinkClasses = clsx(
+	const itemLinkClasses = [
 		'menu-item-link',
-		{
-			'has-text-color': attributes.textColor || attributes.customTextColor,
-			[`has-${attributes.textColor}-color`]: !!attributes.textColor,
-			[`has-${attributes.fontSize}-font-size`]: !!attributes.fontSize
-		}
-	);
+		(attributes.textColor || attributes.customTextColor) && 'has-text-color',
+		attributes.textColor && `has-${attributes.textColor}-color`,
+		attributes.fontSize && `has-${attributes.fontSize}-font-size`,
+	].filter(Boolean).join(' ');
 
 	const itemLinkStyles = {
 		color: attributes.customTextColor,

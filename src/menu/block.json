@@ -35,6 +35,10 @@
         "showDropdownArrow": {
             "type": "boolean",
             "default": true
+        },
+        "delayBetweenDropdowns": {
+            "type": "number",
+            "default": 0
         }
     },
     "providesContext": {

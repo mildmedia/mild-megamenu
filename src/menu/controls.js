@@ -74,6 +74,14 @@ function Controls(args) {
 						checked={attributes.showDropdownArrow !== false}
 						onChange={(value) => setAttributes({ showDropdownArrow: value })}
 					/>
+					<RangeControl
+						label={__('Dropdown delay between dropdowns in seconds')}
+						value={attributes.delayBetweenDropdowns}
+						onChange={(delayBetweenDropdowns) => setAttributes({ delayBetweenDropdowns })}
+						min={0}
+						max={1.5}
+						step={0.05}
+					/>
 					<LinkPaddingControl
 						attributes={attributes}
 						setAttributes={setAttributes}

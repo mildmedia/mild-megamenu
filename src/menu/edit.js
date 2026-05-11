@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import clsx from 'clsx';
 import Controls from './controls';
 
 /**
@@ -35,16 +34,14 @@ function MegaMenu(args) {
 	const ref = useRef();
 	const [isAdjusting, setIsAdjusting] = useState(false);
 
-	const menuClasses = clsx(
+	const menuClasses = [
 		'wp-block-mild-megamenu',
 		'megamenu',
-		{
-			[`justify-items-${attributes.itemsJustification}`]: attributes.itemsJustification,
-			[`has-full-width-dropdown`]: attributes.expandDropdown,
-			[`is-orientation-vertical`]: attributes.orientation === 'vertical',
-			'is-adjusting': isAdjusting,
-		}
-	);
+		attributes.itemsJustification && `justify-items-${attributes.itemsJustification}`,
+		attributes.expandDropdown && 'has-full-width-dropdown',
+		attributes.orientation === 'vertical' && 'is-orientation-vertical',
+		isAdjusting && 'is-adjusting',
+	].filter(Boolean).join(' ');
 
 	const blockProps = useBlockProps({ className: menuClasses });
 	const blockId = blockProps.id;
