@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 if(strstr($_SERVER['HTTP_HOST'], 'lndo.site')) {
 	define('MILD_MEGAMENU_VERSION', time());
 } else {
-	define( 'MILD_MEGAMENU_VERSION', '1.1.3' );
+	define( 'MILD_MEGAMENU_VERSION', '1.1.32' );
 }
 define( 'MILD_MEGAMENU_FILE', __FILE__ );
 
