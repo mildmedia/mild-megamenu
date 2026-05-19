@@ -46,21 +46,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const target = event.target;
             if (target.closest('.menu-item.has-click-trigger')) {
+
                 if (target.closest('.dropdown-wrapper')) {
                     return;
                 }
+
                 event.preventDefault();
                 const menuItem = target.closest('.menu-item');
                 const megaMenu = menuItem.closest('.megamenu');
                 const openMenus = document.querySelectorAll('.menu-item.has-click-trigger.is-opened');
-                console.log('closing other dropdowns');
+
+                // close other menus
                 openMenus.forEach(item => {
                     // close all but this menu-item
                     if (!item.contains(menuItem)) {
                         item.classList.remove('is-opened');
                     }
                 });
-                if (openMenus.length > 0 && megaMenu.getAttribute('data-delay-dropdowns')) {
+
+                // toggle top menu class according to if this menu-item is not opened
+                megaMenu.classList.toggle('has-opened-dropdown', !menuItem.classList.contains('is-opened'));
+
+                menuItem.classList.toggle('is-opened');
+                return;
+
+                /* if (openMenus.length > 0 && megaMenu.getAttribute('data-delay-dropdowns')) {
                     const delay = parseFloat(megaMenu.getAttribute('data-delay-dropdowns')) * 1000;
                     setTimeout(() => {
                         menuItem.classList.toggle('is-opened');
@@ -69,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     menuItem.classList.toggle('is-opened');
                 }
                 return;
+                */
             }
 
             document.querySelectorAll('.menu-item.has-click-trigger.is-opened').forEach(item => {

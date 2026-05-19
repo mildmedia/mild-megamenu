@@ -11,3 +11,9 @@ Future work:
 - Rename "dropdown" to "submenu" conceptually when used inside a vertical menu
 - Allow submenu to be placed to the left or right of the parent menu (not below it)
 - Likely needs a separate CSS positioning mode + JS adjustment for vertical menus
+
+### Version numbering
+
+update version number in these places:
+- `package.json`
+- `mild-megamenu.php` (both in the header comment and the `define('MILD_MEGAMENU_VERSION', 'X.X.X')` line #22)
