@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      PLUGIN_SLUG: mild-megamenu
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Package zip
+        run: |
+          mkdir -p /tmp/staging/$PLUGIN_SLUG
+          rsync -a \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude '.omc/' \
+            --exclude '.claude/' \
+            --exclude '.idea/' \
+            --exclude 'src/' \
+            --exclude 'node_modules/' \
+            --exclude 'memory/' \
+            --exclude '.DS_Store' \
+            --exclude 'package-lock.json' \
+            --exclude 'composer.lock' \
+            --exclude 'CLAUDE.md' \
+            ./ /tmp/staging/$PLUGIN_SLUG/
+          cd /tmp/staging
+          zip -r "$GITHUB_WORKSPACE/$PLUGIN_SLUG.zip" "$PLUGIN_SLUG"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.PLUGIN_SLUG }}.zip
+          generate_release_notes: true

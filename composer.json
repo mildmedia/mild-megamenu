@@ -2,15 +2,5 @@
     "name": "mildmedia/mild-megamenu",
     "type": "wordpress-plugin",
     "description": "Megamenu plugin for Gutenberg WordPress",
-    "license": "GPL-2.0+",
-    "scripts": {
-        "post-install-cmd": [
-            "npm install",
-            "npm run build"
-        ],
-        "post-update-cmd": [
-            "npm install",
-            "npm run build"
-        ]
-    }
+    "license": "GPL-2.0-or-later"
 }
