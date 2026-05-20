@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const menus = document.querySelectorAll('.megamenu');
-    const plainMenus = document.querySelectorAll('.megamenu');
     const menuToggles = document.querySelectorAll('.megamenu-toggle');
 
     function setDropdownAlignment(menus) {
