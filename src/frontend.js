@@ -64,10 +64,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
-                // toggle top menu class according to if this menu-item is not opened
-                megaMenu.classList.toggle('has-opened-dropdown', !menuItem.classList.contains('is-opened'));
-
                 menuItem.classList.toggle('is-opened');
+                // toggle top menu class according to if this menu-item is not opened
+                if (!megaMenu.classList.contains('dropdown-opened')) {
+                    setTimeout(() => {
+                        megaMenu.classList.toggle('dropdown-opened', menuItem.classList.contains('is-opened'));
+                    }, 700);
+                } else {
+                    megaMenu.classList.toggle('dropdown-opened', menuItem.classList.contains('is-opened'));
+                }
+
                 return;
 
                 /* if (openMenus.length > 0 && megaMenu.getAttribute('data-delay-dropdowns')) {
@@ -83,8 +89,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             document.querySelectorAll('.menu-item.has-click-trigger.is-opened').forEach(item => {
+                const megaMenu = item.closest('.megamenu');
+                megaMenu.classList.remove('dropdown-opened');
                 item.classList.remove('is-opened');
             });
+
+
 
             if (target.classList.contains('menu-item-toggle')) {
                 console.log('toggle-mobile-menu');
