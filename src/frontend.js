@@ -44,6 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('click', function (event) {
 
             const target = event.target;
+            // check for first header element within wp-site-blocks
+            const headerElement = document.querySelector('.wp-site-blocks')?.querySelector('header');
+            const headerWithMultipleMenus = headerElement?.querySelectorAll('.megamenu').length > 1;
+            const headerMenus = headerWithMultipleMenus ? headerElement.querySelectorAll('.megamenu') : [];
+
             if (target.closest('.menu-item.has-click-trigger')) {
 
                 if (target.closest('.dropdown-wrapper')) {
@@ -52,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 event.preventDefault();
                 const menuItem = target.closest('.menu-item');
-                const megaMenu = menuItem.closest('.megamenu');
+                const parentMenu = menuItem.closest('.megamenu');
                 const openMenus = document.querySelectorAll('.menu-item.has-click-trigger.is-opened');
 
                 // close other menus
@@ -65,18 +70,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 menuItem.classList.toggle('is-opened');
                 // toggle top menu class according to if this menu-item is not opened
-                if (!megaMenu.classList.contains('dropdown-opened')) {
+
+                if (!parentMenu.classList.contains('dropdown-opened')) {
                     setTimeout(() => {
-                        megaMenu.classList.toggle('dropdown-opened', menuItem.classList.contains('is-opened'));
+                        if (headerWithMultipleMenus) {
+                            headerMenus.forEach(menu => {
+                                menu.classList.add('dropdown-opened');
+                            });
+                        } else {
+                            parentMenu.classList.add('dropdown-opened');
+                        }
                     }, 700);
                 } else {
-                    megaMenu.classList.toggle('dropdown-opened', menuItem.classList.contains('is-opened'));
+                    if (headerWithMultipleMenus) {
+                        headerMenus.forEach(menu => {
+                            menu.classList.toggle('dropdown-opened', menuItem.classList.contains('is-opened'));
+                        });
+                    } else {
+                        parentMenu.classList.toggle('dropdown-opened', menuItem.classList.contains('is-opened'));
+                    }
                 }
+
 
                 return;
 
-                /* if (openMenus.length > 0 && megaMenu.getAttribute('data-delay-dropdowns')) {
-                    const delay = parseFloat(megaMenu.getAttribute('data-delay-dropdowns')) * 1000;
+                /* if (openMenus.length > 0 && parentMenu.getAttribute('data-delay-dropdowns')) {
+                    const delay = parseFloat(parentMenu.getAttribute('data-delay-dropdowns')) * 1000;
                     setTimeout(() => {
                         menuItem.classList.toggle('is-opened');
                     }, delay);
@@ -88,8 +107,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             document.querySelectorAll('.menu-item.has-click-trigger.is-opened').forEach(item => {
-                const megaMenu = item.closest('.megamenu');
-                megaMenu.classList.remove('dropdown-opened');
+                const parentMenu = item.closest('.megamenu');
+
+                if (headerWithMultipleMenus) {
+                    headerMenus.forEach(menu => {
+                        menu.classList.remove('dropdown-opened');
+                    });
+                } else {
+                    parentMenu.classList.remove('dropdown-opened');
+                }
                 item.classList.remove('is-opened');
             });
 
