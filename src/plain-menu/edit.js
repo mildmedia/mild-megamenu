@@ -6,10 +6,10 @@ import Controls from './controls';
 /**
  * WordPress dependencies
  */
-import { useRef } from '@wordpress/element';
 import {
 	InnerBlocks,
 	useBlockProps,
+	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
@@ -29,8 +29,6 @@ function PlainMenu(args) {
 		attributes
 	} = args;
 
-	const ref = useRef();
-
 	const menuClasses = [
 		'plainmenu',
 		attributes.itemsJustification && `justify-items-${attributes.itemsJustification}`,
@@ -39,28 +37,31 @@ function PlainMenu(args) {
 
 	const blockProps = useBlockProps({ className: menuClasses });
 
+	const gapStyle = attributes?.style?.spacing?.blockGap
+		? { gap: attributes.style.spacing.blockGap.replace(/^var:preset\|spacing\|(.+)$/, 'var(--wp--preset--spacing--$1)') }
+		: undefined;
+
+	const innerBlocksProps = useInnerBlocksProps(
+		{ className: 'plainmenu__content', style: gapStyle },
+		{
+			template: TEMPLATE,
+			templateLock: false,
+			allowedBlocks: ALLOWED_BLOCKS,
+			templateInsertUpdatesSelection: false,
+			renderAppender:
+				(isImmediateParentOfSelectedBlock && !selectedBlockHasDescendants) || isSelected
+					? InnerBlocks.DefaultAppender
+					: false,
+			__experimentalMoverDirection: attributes.orientation,
+			orientation: attributes.orientation,
+		}
+	);
+
 	return (
 		<>
 			<Controls {...args} />
 			<div {...blockProps}>
-				<div className="plainmenu__content" style={attributes?.style?.spacing?.blockGap ? { gap: attributes.style.spacing.blockGap.replace(/^var:preset\|spacing\|(.+)$/, 'var(--wp--preset--spacing--$1)') } : undefined}>
-					<InnerBlocks
-						ref={ref}
-						template={TEMPLATE}
-						templateLock={false}
-						allowedBlocks={ALLOWED_BLOCKS}
-						templateInsertUpdatesSelection={false}
-						renderAppender={
-							(isImmediateParentOfSelectedBlock &&
-								!selectedBlockHasDescendants) ||
-								isSelected
-								? InnerBlocks.DefaultAppender
-								: false
-						}
-						__experimentalMoverDirection={attributes.orientation}
-						orientation={attributes.orientation}
-					/>
-				</div>
+				<div {...innerBlocksProps} />
 			</div>
 		</>
 	);

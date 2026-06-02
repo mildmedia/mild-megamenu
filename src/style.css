@@ -209,12 +209,13 @@
 }
 
 .dropdown {
-    display: flex;
     background: inherit;
     width: 100%;
 }
 
 .dropdown-content {
+    position: relative;
+
     >* {
         max-width: 100%;
 
