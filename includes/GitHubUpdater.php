@@ -42,7 +42,8 @@ final class GitHubUpdater {
 		add_filter( 'upgrader_source_selection', [ $this, 'fix_source_dir' ], 10, 4 );
 
 		if ( is_admin() ) {
-			add_action( 'load-plugins.php', [ $this, 'maybe_refresh_on_plugins_page' ] );
+			add_action( 'load-plugins.php',     [ $this, 'maybe_refresh_on_plugins_page' ] );
+			add_action( 'load-update-core.php', [ $this, 'maybe_refresh_on_plugins_page' ] );
 		}
 	}
 
