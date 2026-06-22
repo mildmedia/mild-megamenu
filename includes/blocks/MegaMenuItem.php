@@ -66,13 +66,9 @@ class MegaMenuItem extends AbstractBlock {
 
 		$html .= '<li ' . get_block_wrapper_attributes( [ 'class' => implode( ' ', $item_classes ) ] ) . '>';
 		$html .= '<div class="' . esc_attr( implode( ' ', $item_link_classes ) ) . '" style="' . esc_attr( $item_link_style ) . '">';
-		$html .= '<a href="';
-		if ( isset( $attributes['url'] ) ) {
-			$html .= esc_url( $attributes['url'] );
-		} else {
-			$html .= '#';
-		}
-		$html .= '"';
+		$resolved_url = $this->resolve_url( $attributes );
+
+		$html .= '<a href="' . esc_url( $resolved_url ) . '"';
 
 		if ( isset( $attributes['linkTarget'] ) ) {
 			$html .= ' target="' . esc_attr( $attributes['linkTarget'] ) . '"';
@@ -103,6 +99,27 @@ class MegaMenuItem extends AbstractBlock {
 		$html .= '</li>';
 
 		return $html;
+	}
+
+	private function resolve_url( array $attributes ): string {
+		$kind = $attributes['kind'] ?? '';
+		$id   = isset( $attributes['id'] ) ? intval( $attributes['id'] ) : 0;
+
+		if ( $id > 0 ) {
+			if ( $kind === 'post-type' ) {
+				$permalink = get_permalink( $id );
+				if ( $permalink ) {
+					return $permalink;
+				}
+			} elseif ( $kind === 'taxonomy' ) {
+				$term_link = get_term_link( $id );
+				if ( ! \is_wp_error( $term_link ) ) {
+					return $term_link;
+				}
+			}
+		}
+
+		return $attributes['url'] ?? '#';
 	}
 
 	private function generateFontSizeStyles( $attributes ) {
