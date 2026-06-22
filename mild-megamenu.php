@@ -43,6 +43,9 @@ if ( ! function_exists( __NAMESPACE__ . '\\megamenu_init' ) && function_exists( 
 	}
 
 	function register_getwid_migrator_hooks(): void {
+		add_action( 'rest_api_init', function () {
+			GetwidMigrator::register_rest_route();
+		} );
 		add_action( 'admin_menu', __NAMESPACE__ . '\\getwid_migrator_admin_menu' );
 		add_action( 'admin_post_mild_megamenu_migrate_getwid', __NAMESPACE__ . '\\getwid_migrator_handle_post' );
 

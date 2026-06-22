@@ -68,8 +68,25 @@ class GetwidMigrator {
 		return $wpdb->get_col(
 			"SELECT ID FROM {$wpdb->posts}
 			 WHERE post_content LIKE '%getwid-megamenu/%'
+			 AND post_type != 'revision'
 			 AND post_status NOT IN ('trash', 'auto-draft')"
 		);
+	}
+
+	public static function register_rest_route(): void {
+		\register_rest_route( 'mild-megamenu/v1', '/convert-content', [
+			'methods'             => 'POST',
+			'callback'            => [ self::class, 'rest_convert_content' ],
+			'permission_callback' => fn() => \current_user_can( 'edit_posts' ),
+			'args'                => [
+				'content' => [ 'type' => 'string', 'required' => true ],
+			],
+		] );
+	}
+
+	public static function rest_convert_content( \WP_REST_Request $request ): \WP_REST_Response {
+		$converted = self::convert_content( $request->get_param( 'content' ) );
+		return new \WP_REST_Response( [ 'content' => $converted ], 200 );
 	}
 
 	public static function convert_post( int $post_id ): bool {
