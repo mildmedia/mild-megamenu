@@ -119,20 +119,17 @@
 
 /* --- Hover / focus dropdown (desktop) --- */
 
-.megamenu .menu-item:not(.has-click-trigger):focus-within .dropdown-wrapper,
-.megamenu .menu-item:not(.has-click-trigger):hover .dropdown-wrapper,
-.megamenu .menu-item.has-click-trigger.is-opened .dropdown-wrapper {
+.menu-item:not(.has-click-trigger):is(:hover, :focus-within) .dropdown-wrapper,
+.menu-item.is-opened .dropdown-wrapper {
     height: auto;
 }
 
-/* Delay closing so mouse can travel from menu item down to the dropdown
-   without the gap between them causing the dropdown to collapse. */
-.megamenu:not(.is-mobile) .menu-item:not(.has-click-trigger) .dropdown-wrapper {
+/* Delay closing so mouse can travel from menu item to dropdown without gap collapsing it. */
+.menu-item:not(.has-click-trigger) .dropdown-wrapper {
     transition: height 0s 0.2s;
 }
 
-.megamenu:not(.is-mobile) .menu-item:not(.has-click-trigger):hover .dropdown-wrapper,
-.megamenu:not(.is-mobile) .menu-item:not(.has-click-trigger):focus-within .dropdown-wrapper {
+.menu-item:not(.has-click-trigger):is(:hover, :focus-within) .dropdown-wrapper {
     transition: none;
 }
 
@@ -207,7 +204,7 @@
     }
 }
 
-.megamenu:not(.is-mobile) .dropdown-wrapper {
+.megamenu .dropdown-wrapper {
     position: absolute;
     left: 0;
     z-index: 100;

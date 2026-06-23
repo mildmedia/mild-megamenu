@@ -32,103 +32,123 @@ document.addEventListener('DOMContentLoaded', function () {
             if (breakpoint >= windowWidth) {
                 toggleButtonWrapper.classList.remove('is-hidden');
                 menu.classList.add('is-mobile');
+                menu.querySelectorAll('.menu-item.has-children').forEach(item => {
+                    item.classList.add('has-click-trigger');
+                });
             } else {
                 toggleButtonWrapper.classList.add('is-hidden');
                 menu.classList.remove('is-mobile', 'is-opened');
+                menu.querySelectorAll('.menu-item.has-children').forEach(item => {
+                    item.classList.remove('has-click-trigger', 'is-opened');
+                });
             }
         });
     }
 
-    function attachToggleActionToButtons(menus) {
+    function attachToggleActionToButtons() {
 
-        document.addEventListener('click', function (event) {
+        let touchStartX = 0;
+        let touchStartY = 0;
 
-            const target = event.target;
-            // check for first header element within wp-site-blocks
+        function getHeaderContext() {
             const headerElement = document.querySelector('.wp-site-blocks')?.querySelector('header');
             const headerWithMultipleMenus = headerElement?.querySelectorAll('.megamenu').length > 1;
-            const headerMenus = headerWithMultipleMenus ? headerElement.querySelectorAll('.megamenu') : [];
+            return {
+                headerWithMultipleMenus,
+                headerMenus: headerWithMultipleMenus ? headerElement.querySelectorAll('.megamenu') : [],
+            };
+        }
 
-            if (target.closest('.menu-item.has-click-trigger')) {
-
-                if (target.closest('.dropdown-wrapper')) {
-                    return;
-                }
-
-                event.preventDefault();
-                const menuItem = target.closest('.menu-item');
-                const parentMenu = menuItem.closest('.megamenu');
-                const openMenus = document.querySelectorAll('.menu-item.has-click-trigger.is-opened');
-
-                // close other menus
-                openMenus.forEach(item => {
-                    // close all but this menu-item
-                    if (!item.contains(menuItem)) {
-                        item.classList.remove('is-opened');
-                    }
-                });
-
-                menuItem.classList.toggle('is-opened');
-                // toggle top menu class according to if this menu-item is not opened
-
-                if (!parentMenu.classList.contains('dropdown-opened')) {
-                    setTimeout(() => {
-                        if (headerWithMultipleMenus) {
-                            headerMenus.forEach(menu => {
-                                menu.classList.add('dropdown-opened');
-                            });
-                        } else {
-                            parentMenu.classList.add('dropdown-opened');
-                        }
-                    }, 700);
-                } else {
-                    if (headerWithMultipleMenus) {
-                        headerMenus.forEach(menu => {
-                            menu.classList.toggle('dropdown-opened', menuItem.classList.contains('is-opened'));
-                        });
-                    } else {
-                        parentMenu.classList.toggle('dropdown-opened', menuItem.classList.contains('is-opened'));
-                    }
-                }
-
-
-                return;
-
-                /* if (openMenus.length > 0 && parentMenu.getAttribute('data-delay-dropdowns')) {
-                    const delay = parseFloat(parentMenu.getAttribute('data-delay-dropdowns')) * 1000;
-                    setTimeout(() => {
-                        menuItem.classList.toggle('is-opened');
-                    }, delay);
-                } else {
-                    menuItem.classList.toggle('is-opened');
-                }
-                return;
-                */
-            }
+        function toggleItem(clickedItem) {
+            const { headerWithMultipleMenus, headerMenus } = getHeaderContext();
 
             document.querySelectorAll('.menu-item.has-click-trigger.is-opened').forEach(item => {
-                const parentMenu = item.closest('.megamenu');
+                if (!item.contains(clickedItem)) {
+                    item.classList.remove('is-opened');
+                }
+            });
 
+            clickedItem.classList.toggle('is-opened');
+
+            const parentMenu = clickedItem.closest('.megamenu');
+
+            if (!parentMenu.classList.contains('dropdown-opened')) {
+                setTimeout(() => {
+                    if (headerWithMultipleMenus) {
+                        headerMenus.forEach(menu => menu.classList.add('dropdown-opened'));
+                    } else {
+                        parentMenu.classList.add('dropdown-opened');
+                    }
+                }, 700);
+            } else {
                 if (headerWithMultipleMenus) {
                     headerMenus.forEach(menu => {
-                        menu.classList.remove('dropdown-opened');
+                        menu.classList.toggle('dropdown-opened', clickedItem.classList.contains('is-opened'));
                     });
+                } else {
+                    parentMenu.classList.toggle('dropdown-opened', clickedItem.classList.contains('is-opened'));
+                }
+            }
+        }
+
+        function closeAll() {
+            const { headerWithMultipleMenus, headerMenus } = getHeaderContext();
+            document.querySelectorAll('.menu-item.has-click-trigger.is-opened').forEach(item => {
+                const parentMenu = item.closest('.megamenu');
+                if (headerWithMultipleMenus) {
+                    headerMenus.forEach(menu => menu.classList.remove('dropdown-opened'));
                 } else {
                     parentMenu.classList.remove('dropdown-opened');
                 }
                 item.classList.remove('is-opened');
             });
+        }
 
 
+        // touch click
+        let lastClickedItem = null;
+        document.addEventListener('touchend', function (event) {
+            const target = event.target;
+            const clickedItem = target.closest('.menu-item.has-children');
+            if (clickedItem) {
+                if (lastClickedItem == clickedItem) {
+                    event.stopImmediatePropagation();
+                    console.log('second touchstart on menu item');
+                    document.body.click();
+                    lastClickedItem = null;
+                    return;
+                }
+                lastClickedItem = clickedItem;
+            }
 
-            if (target.classList.contains('menu-item-toggle')) {
-                console.log('toggle-mobile-menu');
-                const menuItem = target.closest('.menu-item');
-                const dropdown = menuItem.querySelector('.dropdown-wrapper');
-                if (menu.classList.contains('is-mobile') || !menuItem.classList.contains('has-click-trigger')) {
-                    toggleMobileMenu(target, dropdown);
-                } else {
-                    menuItem.classList.toggle('is-opened');
+        });
+
+
+        // Handle toggle via click for desktop (mouse), and as fallback for touch
+        // when touchend didn't call preventDefault (real link navigation case).
+        document.addEventListener('click', function (event) {
+            const target = event.target;
+            const clickedItem = target.closest('.menu-item.has-click-trigger');
+
+            if (clickedItem) {
+                if (target.closest('.dropdown-wrapper')) return;
+
+                const clickedItemMenu = clickedItem.closest('.megamenu');
+                const isMobile = clickedItemMenu?.classList.contains('is-mobile');
+
+                event.preventDefault();
+                toggleItem(clickedItem);
+                return;
+            }
+
+            closeAll();
+
+            // Prevent page jump for empty links in desktop hover menu items (no click-trigger)
+            const link = target.closest('.menu-item.has-children a');
+            if (link) {
+                const href = link.getAttribute('href');
+                if (!href || href === '#') {
+                    event.preventDefault();
                 }
             }
         });
@@ -167,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     showMenuToggleButton(menus);
-    attachToggleActionToButtons(menus);
+    attachToggleActionToButtons();
     setDropdownAlignment(menus);
 
     window.addEventListener('resize', function () {
